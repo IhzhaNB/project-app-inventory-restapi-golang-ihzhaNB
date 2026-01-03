@@ -82,10 +82,6 @@ func (cr *categoryRepo) FindByID(ctx context.Context, id uuid.UUID) (*model.Cate
 		&category.UpdatedAt,
 		&category.DeletedAt,
 	); err != nil {
-		cr.log.Warn("Category not found",
-			zap.String("id", id.String()),
-			zap.Error(err),
-		)
 		return nil, fmt.Errorf("Category not found: %w", err)
 	}
 

@@ -87,10 +87,6 @@ func (wr *warehouseRepo) FindByID(ctx context.Context, id uuid.UUID) (*model.War
 	)
 	if err != nil {
 		// Warehouse tidak ditemukan
-		wr.log.Warn("Warehouse not found",
-			zap.String("id", id.String()),
-			zap.Error(err),
-		)
 		return nil, fmt.Errorf("Warehouse not found: %w", err)
 	}
 
@@ -117,10 +113,6 @@ func (wr *warehouseRepo) FindByCode(ctx context.Context, code string) (*model.Wa
 	)
 	if err != nil {
 		// Warehouse tidak ditemukan
-		wr.log.Warn("Warehouse not found",
-			zap.String("code", code),
-			zap.Error(err),
-		)
 		return nil, fmt.Errorf("Warehouse not found: %w", err)
 	}
 

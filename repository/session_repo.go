@@ -84,10 +84,6 @@ func (sr *sessionRepo) FindByToken(ctx context.Context, token uuid.UUID) (*model
 	)
 	if err != nil {
 		// Session tidak ditemukan
-		sr.log.Warn("Session not found or revoked",
-			zap.String("token", token.String()),
-			zap.Error(err),
-		)
 		return nil, fmt.Errorf("session not found: %w", err)
 	}
 

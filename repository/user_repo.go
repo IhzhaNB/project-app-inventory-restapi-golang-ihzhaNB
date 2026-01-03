@@ -97,10 +97,6 @@ func (ur *userRepo) FindByID(ctx context.Context, id uuid.UUID) (*model.User, er
 	)
 	if err != nil {
 		// User tidak ditemukan
-		ur.log.Warn("User not found",
-			zap.String("id", id.String()),
-			zap.Error(err),
-		)
 		return nil, fmt.Errorf("User not found: %w", err)
 	}
 
@@ -131,10 +127,6 @@ func (ur *userRepo) FindByEmail(ctx context.Context, email string) (*model.User,
 	)
 	if err != nil {
 		// User tidak ditemukan
-		ur.log.Warn("User not found",
-			zap.String("email", email),
-			zap.Error(err),
-		)
 		return nil, fmt.Errorf("User not found: %w", err)
 	}
 
