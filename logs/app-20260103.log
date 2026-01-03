@@ -136,3 +136,49 @@
 2026-01-03T20:16:17.047+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "GET", "path": "/api/warehouses/", "duration": "4.369195ms", "ip": "[::1]:51714", "user_agent": "PostmanRuntime/7.51.0"}
 2026-01-03T20:19:39.720+0700	INFO	assignment-5/main.go:84	Shutting down server...
 2026-01-03T20:19:39.728+0700	INFO	assignment-5/main.go:93	Server stopped
+2026-01-03T22:30:37.103+0700	INFO	assignment-5/main.go:46	Database connected	{"host": "172.29.48.1", "database": "inventory_system"}
+2026-01-03T22:30:37.104+0700	INFO	assignment-5/main.go:67	Server starting	{"port": "8080", "app": "Inventary_System", "debug": true}
+2026-01-03T22:32:29.260+0700	WARN	repository/category_repo.go:112	Category not found	{"name": "Elektronik", "error": "no rows in result set"}
+2026-01-03T22:32:29.265+0700	INFO	repository/category_repo.go:60	Warehouse Created	{"id": "4012eae1-a267-4343-956b-caf59c734ebc", "name": "Elektronik"}
+2026-01-03T22:32:29.265+0700	INFO	service/category_serv.go:64	Category created	{"category_id": "4012eae1-a267-4343-956b-caf59c734ebc"}
+2026-01-03T22:32:29.265+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/admin/categories/", "duration": "47.821565ms", "ip": "[::1]:44234", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T22:32:41.435+0700	WARN	repository/category_repo.go:112	Category not found	{"name": "Pakaian", "error": "no rows in result set"}
+2026-01-03T22:32:41.438+0700	INFO	repository/category_repo.go:60	Warehouse Created	{"id": "2a8e6e3b-5c83-4a99-85dd-7ed6be92467e", "name": "Pakaian"}
+2026-01-03T22:32:41.438+0700	INFO	service/category_serv.go:64	Category created	{"category_id": "2a8e6e3b-5c83-4a99-85dd-7ed6be92467e"}
+2026-01-03T22:32:41.438+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/admin/categories/", "duration": "20.945007ms", "ip": "[::1]:44234", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T22:32:49.876+0700	WARN	repository/category_repo.go:112	Category not found	{"name": "Makanan & Minuman", "error": "no rows in result set"}
+2026-01-03T22:32:49.880+0700	INFO	repository/category_repo.go:60	Warehouse Created	{"id": "f2c5eb68-08e8-4732-96e1-f7055991c75f", "name": "Makanan & Minuman"}
+2026-01-03T22:32:49.880+0700	INFO	service/category_serv.go:64	Category created	{"category_id": "f2c5eb68-08e8-4732-96e1-f7055991c75f"}
+2026-01-03T22:32:49.881+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/admin/categories/", "duration": "8.557292ms", "ip": "[::1]:44234", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T22:32:58.076+0700	WARN	repository/category_repo.go:112	Category not found	{"name": "Perkakas", "error": "no rows in result set"}
+2026-01-03T22:32:58.078+0700	INFO	repository/category_repo.go:60	Warehouse Created	{"id": "a994746c-0f36-4c5e-affd-3c3024297793", "name": "Perkakas"}
+2026-01-03T22:32:58.078+0700	INFO	service/category_serv.go:64	Category created	{"category_id": "a994746c-0f36-4c5e-affd-3c3024297793"}
+2026-01-03T22:32:58.078+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/admin/categories/", "duration": "6.084299ms", "ip": "[::1]:44234", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T22:33:05.466+0700	WARN	repository/category_repo.go:112	Category not found	{"name": "Olahraga", "error": "no rows in result set"}
+2026-01-03T22:33:05.468+0700	INFO	repository/category_repo.go:60	Warehouse Created	{"id": "0fa59620-79b0-4ace-a054-c4c881de568d", "name": "Olahraga"}
+2026-01-03T22:33:05.469+0700	INFO	service/category_serv.go:64	Category created	{"category_id": "0fa59620-79b0-4ace-a054-c4c881de568d"}
+2026-01-03T22:33:05.469+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/admin/categories/", "duration": "9.108301ms", "ip": "[::1]:44234", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T22:33:12.659+0700	WARN	repository/category_repo.go:112	Category not found	{"name": "Buku & Alat Tulis", "error": "no rows in result set"}
+2026-01-03T22:33:12.660+0700	INFO	repository/category_repo.go:60	Warehouse Created	{"id": "af388187-38df-409e-8a6b-811141c882de", "name": "Buku & Alat Tulis"}
+2026-01-03T22:33:12.661+0700	INFO	service/category_serv.go:64	Category created	{"category_id": "af388187-38df-409e-8a6b-811141c882de"}
+2026-01-03T22:33:12.661+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/admin/categories/", "duration": "5.2541ms", "ip": "[::1]:44234", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T22:33:35.125+0700	INFO	repository/category_repo.go:162	Fetched all categories	{"total_categories": 6}
+2026-01-03T22:33:35.126+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "GET", "path": "/api/categories/", "duration": "8.155893ms", "ip": "[::1]:44234", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T22:34:00.690+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "GET", "path": "/api/categories/4012eae1-a267-4343-956b-caf59c734ebc", "duration": "4.805698ms", "ip": "[::1]:44234", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T22:34:49.020+0700	INFO	repository/category_repo.go:162	Fetched all categories	{"total_categories": 6}
+2026-01-03T22:34:49.020+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "GET", "path": "/api/categories/", "duration": "4.974598ms", "ip": "[::1]:44234", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T22:35:40.220+0700	WARN	repository/category_repo.go:112	Category not found	{"name": "Test Category", "error": "no rows in result set"}
+2026-01-03T22:35:40.221+0700	INFO	repository/category_repo.go:60	Warehouse Created	{"id": "65d7a8ad-1197-408f-80e6-7b9084fe7f9c", "name": "Test Category"}
+2026-01-03T22:35:40.222+0700	INFO	service/category_serv.go:64	Category created	{"category_id": "65d7a8ad-1197-408f-80e6-7b9084fe7f9c"}
+2026-01-03T22:35:40.222+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/admin/categories/", "duration": "4.32449ms", "ip": "[::1]:44234", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T22:36:45.758+0700	WARN	repository/session_repo.go:96	Session expired	{"token": "957c6d0a-6b30-4f66-8a06-f435015658d9", "expires_at": "2026-01-03T02:41:25.217Z"}
+2026-01-03T22:36:45.758+0700	WARN	service/auth_serv.go:139	Invalid token	{"token": "957c6d0a-6b30-4f66-8a06-f435015658d9", "error": "session expired"}
+2026-01-03T22:36:45.758+0700	WARN	middleware/auth.go:50	Invalid token	{"token": "957c6d0a-6b30-4f66-8a06-f435015658d9", "error": "invalid or expired token"}
+2026-01-03T22:36:45.758+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "PUT", "path": "/api/admin/categories/65d7a8ad-1197-408f-80e6-7b9084fe7f9c", "duration": "2.2022ms", "ip": "[::1]:33404", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T22:37:00.613+0700	INFO	repository/category_repo.go:193	Category updated	{"id": "65d7a8ad-1197-408f-80e6-7b9084fe7f9c"}
+2026-01-03T22:37:00.613+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "PUT", "path": "/api/admin/categories/65d7a8ad-1197-408f-80e6-7b9084fe7f9c", "duration": "12.252289ms", "ip": "[::1]:33404", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T22:37:19.450+0700	INFO	repository/category_repo.go:218	Category deleted	{"id": "65d7a8ad-1197-408f-80e6-7b9084fe7f9c"}
+2026-01-03T22:37:19.451+0700	INFO	service/category_serv.go:146	Category deleted	{"category_id": "65d7a8ad-1197-408f-80e6-7b9084fe7f9c"}
+2026-01-03T22:37:19.451+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "DELETE", "path": "/api/admin/categories/65d7a8ad-1197-408f-80e6-7b9084fe7f9c", "duration": "9.732297ms", "ip": "[::1]:33404", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T22:37:57.165+0700	INFO	assignment-5/main.go:84	Shutting down server...
+2026-01-03T22:37:57.166+0700	INFO	assignment-5/main.go:93	Server stopped

@@ -105,7 +105,7 @@ func (wr *warehouseRepo) FindByCode(ctx context.Context, code string) (*model.Wa
 
 	var warehouse model.Warehouse
 
-	// Query single row berdasarkan ID
+	// Query single row berdasarkan Code
 	err := wr.db.QueryRow(ctx, query, code).Scan(
 		&warehouse.ID,
 		&warehouse.Code,

@@ -10,6 +10,7 @@ type Handler struct {
 	Auth      *AuthHandler
 	User      *UserHandler
 	Warehouse *WarehouseHandler
+	Category  *CategoryHandler
 }
 
 func NewHandlers(svc *service.Service, log *zap.Logger) Handler {
@@ -17,5 +18,6 @@ func NewHandlers(svc *service.Service, log *zap.Logger) Handler {
 		Auth:      NewAuthHandler(svc, log),
 		User:      NewUserHandler(svc, log),
 		Warehouse: NewWarehouseHandler(svc, log),
+		Category:  NewCategoryHandler(svc, log),
 	}
 }

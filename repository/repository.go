@@ -10,6 +10,7 @@ type Repository struct {
 	Session   SessionRepo
 	User      UserRepo
 	Warehouse WarehouseRepo
+	Category  CategoryRepo
 }
 
 func NewRepository(db database.PgxIface, log *zap.Logger) *Repository {
@@ -17,5 +18,6 @@ func NewRepository(db database.PgxIface, log *zap.Logger) *Repository {
 		Session:   NewSessionRepo(db, log),
 		User:      NewUserRepo(db, log),
 		Warehouse: NewWarehouseRepo(db, log),
+		Category:  NewCategoryRepo(db, log),
 	}
 }

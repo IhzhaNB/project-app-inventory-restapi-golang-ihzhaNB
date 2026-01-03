@@ -33,19 +33,26 @@ func SetupRouter(svc *service.Service, hdl handler.Handler) *chi.Mux {
 	router.Group(func(r chi.Router) {
 		r.Use(middleware.Auth(svc.Auth))
 
-		// Logout untuk semua role
+		// ========== LOGOUT ==========
 		r.Post("/api/auth/logout", hdl.Auth.Logout)
 
-		// User profile (bisa lihat & edit diri sendiri)
+		// ========== USER ROUTES ==========
 		r.Route("/api/users", func(r chi.Router) {
 			// Middleware: AllowSelfOrAdmin (bisa lihat diri sendiri atau admin)
 			r.With(middleware.AllowSelfOrAdmin).Get("/{id}", hdl.User.FindByID)
 			r.With(middleware.AllowSelfOrAdmin).Put("/{id}", hdl.User.Update)
 		})
 
+		// ========== WAREHOUSE ROUTES ==========
 		r.Route("/api/warehouses", func(r chi.Router) {
 			r.Get("/", hdl.Warehouse.FindAll)
 			r.Get("/{id}", hdl.Warehouse.FindByID)
+		})
+
+		// ========== CATEGORY ROUTES ==========
+		r.Route("/api/categories", func(r chi.Router) {
+			r.Get("/", hdl.Category.FindAll)
+			r.Get("/{id}", hdl.Category.FindByID)
 		})
 
 		// ========== PRODUCT ROUTES (nanti) ==========
@@ -68,11 +75,11 @@ func SetupRouter(svc *service.Service, hdl handler.Handler) *chi.Mux {
 		r.Use(middleware.Auth(svc.Auth))
 		r.Use(middleware.RequireRole(model.RoleAdmin, model.RoleSuperAdmin))
 
-		// User Management (Admin bisa manage users)
+		// ========== USER ROUTES ==========
 		r.Route("/api/admin/users", func(r chi.Router) {
-			r.Get("/", hdl.User.FindAll)       // lihat semua users
-			r.Post("/", hdl.User.Create)       // create user baru
-			r.Delete("/{id}", hdl.User.Delete) // delete user (soft delete)
+			r.Get("/", hdl.User.FindAll)
+			r.Post("/", hdl.User.Create)
+			r.Delete("/{id}", hdl.User.Delete)
 		})
 
 		// ========== WAREHOUSE ROUTES ==========
@@ -82,14 +89,12 @@ func SetupRouter(svc *service.Service, hdl handler.Handler) *chi.Mux {
 			r.Delete("/{id}", hdl.Warehouse.Delete)
 		})
 
-		// ========== CATEGORY ROUTES (nanti) ==========
-		// r.Route("/api/admin/categories", func(r chi.Router) {
-		//     r.Get("/", hdl.Category.FindAll)
-		//     r.Get("/{id}", hdl.Category.FindByID)
-		//     r.With(middleware.RequireMasterDataAccess).Post("/", hdl.Category.Create)
-		//     r.With(middleware.RequireMasterDataAccess).Put("/{id}", hdl.Category.Update)
-		//     r.With(middleware.RequireMasterDataAccess).Delete("/{id}", hdl.Category.Delete)
-		// })
+		// ========== CATEGORY ROUTES ==========
+		r.Route("/api/admin/categories", func(r chi.Router) {
+			r.Post("/", hdl.Category.Create)
+			r.Put("/{id}", hdl.Category.Update)
+			r.Delete("/{id}", hdl.Category.Delete)
+		})
 
 		// ========== REPORT ROUTES (nanti) ==========
 		// r.Route("/api/admin/reports", func(r chi.Router) {
