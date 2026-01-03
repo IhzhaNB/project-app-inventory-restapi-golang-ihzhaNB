@@ -14,7 +14,6 @@ import (
 type ShelfRepo interface {
 	Create(ctx context.Context, shelf *model.Shelf) error
 	FindByID(ctx context.Context, id uuid.UUID) (*model.Shelf, error)
-	FindByCodeAndWarehouse(ctx context.Context, code string, warehouseID uuid.UUID) (*model.Shelf, error)
 	FindAll(ctx context.Context) ([]model.Shelf, error)
 	FindByWarehouseID(ctx context.Context, warehouseID uuid.UUID) ([]model.Shelf, error)
 	Update(ctx context.Context, shelf *model.Shelf) error
@@ -32,8 +31,8 @@ func NewShelfRepo(db database.PgxIface, log *zap.Logger) ShelfRepo {
 
 func (sr *shelfRepo) Create(ctx context.Context, shelf *model.Shelf) error {
 	query := `
-		INSERT INTO shelves (id, warehouse_id, code, name, created_at, updated_at)
-		VALUES ($1, $2, $3, $4, $5, $6)
+		INSERT INTO shelves (id, warehouse_id, name, created_at, updated_at)
+		VALUES ($1, $2, $3, $4, $5)
 	`
 
 	// Generate metadata sebelum insert
@@ -46,7 +45,6 @@ func (sr *shelfRepo) Create(ctx context.Context, shelf *model.Shelf) error {
 	_, err := sr.db.Exec(ctx, query,
 		shelf.ID,
 		shelf.WarehouseID,
-		shelf.Code,
 		shelf.Name,
 		shelf.CreatedAt,
 		shelf.UpdatedAt,
@@ -70,7 +68,7 @@ func (sr *shelfRepo) Create(ctx context.Context, shelf *model.Shelf) error {
 
 func (sr *shelfRepo) FindByID(ctx context.Context, id uuid.UUID) (*model.Shelf, error) {
 	query := `
-		SELECT id, warehouse_id, code, name, created_at, updated_at, deleted_at
+		SELECT id, warehouse_id, name, created_at, updated_at, deleted_at
 		FROM shelves WHERE id = $1 AND deleted_at IS NULL
 	`
 
@@ -80,32 +78,6 @@ func (sr *shelfRepo) FindByID(ctx context.Context, id uuid.UUID) (*model.Shelf, 
 	err := sr.db.QueryRow(ctx, query, id).Scan(
 		&shelf.ID,
 		&shelf.WarehouseID,
-		&shelf.Code,
-		&shelf.Name,
-		&shelf.CreatedAt,
-		&shelf.UpdatedAt,
-		&shelf.DeletedAt,
-	)
-	if err != nil {
-		return nil, fmt.Errorf("Shelf not found: %w", err)
-	}
-
-	return &shelf, nil
-}
-
-func (sr *shelfRepo) FindByCodeAndWarehouse(ctx context.Context, code string, warehouseID uuid.UUID) (*model.Shelf, error) {
-	query := `
-		SELECT id, warehouse_id, code, name, created_at, updated_at, deleted_at
-		FROM shelves WHERE code = $1 AND warehouse_id = $2 AND deleted_at IS NULL
-	`
-
-	var shelf model.Shelf
-
-	// Query single row berdasarkan Code
-	err := sr.db.QueryRow(ctx, query, code, warehouseID).Scan(
-		&shelf.ID,
-		&shelf.WarehouseID,
-		&shelf.Code,
 		&shelf.Name,
 		&shelf.CreatedAt,
 		&shelf.UpdatedAt,
@@ -120,7 +92,7 @@ func (sr *shelfRepo) FindByCodeAndWarehouse(ctx context.Context, code string, wa
 
 func (sr *shelfRepo) FindAll(ctx context.Context) ([]model.Shelf, error) {
 	query := `
-		SELECT id, warehouse_id, code, name, created_at, updated_at, deleted_at
+		SELECT id, warehouse_id, name, created_at, updated_at, deleted_at
 		FROM shelves WHERE deleted_at IS NULL
 		ORDER BY created_at DESC
 	`
@@ -140,7 +112,6 @@ func (sr *shelfRepo) FindAll(ctx context.Context) ([]model.Shelf, error) {
 		err := rows.Scan(
 			&shelf.ID,
 			&shelf.WarehouseID,
-			&shelf.Code,
 			&shelf.Name,
 			&shelf.CreatedAt,
 			&shelf.UpdatedAt,
@@ -166,7 +137,7 @@ func (sr *shelfRepo) FindAll(ctx context.Context) ([]model.Shelf, error) {
 
 func (sr *shelfRepo) FindByWarehouseID(ctx context.Context, warehouseID uuid.UUID) ([]model.Shelf, error) {
 	query := `
-		SELECT id, warehouse_id, code, name, created_at, updated_at, deleted_at
+		SELECT id, warehouse_id, name, created_at, updated_at, deleted_at
 		FROM shelves WHERE warehouse_id = $1 AND deleted_at IS NULL
 		ORDER BY code
 	`
@@ -186,7 +157,6 @@ func (sr *shelfRepo) FindByWarehouseID(ctx context.Context, warehouseID uuid.UUI
 		err := rows.Scan(
 			&shelf.ID,
 			&shelf.WarehouseID,
-			&shelf.Code,
 			&shelf.Name,
 			&shelf.CreatedAt,
 			&shelf.UpdatedAt,
@@ -209,8 +179,8 @@ func (sr *shelfRepo) FindByWarehouseID(ctx context.Context, warehouseID uuid.UUI
 func (sr *shelfRepo) Update(ctx context.Context, shelf *model.Shelf) error {
 	query := `
 		UPDATE shelves
-		SET warehouse_id = $1, code = $2, name = $3, updated_at = $4
-		WHERE id = $5 AND deleted_at IS NULL
+		SET warehouse_id = $1, name = $2, updated_at = $3
+		WHERE id = $4 AND deleted_at IS NULL
 	`
 
 	// Update timestamp
@@ -219,7 +189,6 @@ func (sr *shelfRepo) Update(ctx context.Context, shelf *model.Shelf) error {
 	// Execute UPDATE statement
 	result, err := sr.db.Exec(ctx, query,
 		shelf.WarehouseID,
-		shelf.Code,
 		shelf.Name,
 		shelf.UpdatedAt,
 		shelf.ID,

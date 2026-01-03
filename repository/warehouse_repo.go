@@ -14,7 +14,6 @@ import (
 type WarehouseRepo interface {
 	Create(ctx context.Context, warehouse *model.Warehouse) error
 	FindByID(ctx context.Context, id uuid.UUID) (*model.Warehouse, error)
-	FindByCode(ctx context.Context, code string) (*model.Warehouse, error)
 	FindAll(ctx context.Context) ([]model.Warehouse, error)
 	Update(ctx context.Context, warehouse *model.Warehouse) error
 	Delete(ctx context.Context, id uuid.UUID) error
@@ -31,8 +30,8 @@ func NewWarehouseRepo(db database.PgxIface, log *zap.Logger) WarehouseRepo {
 
 func (wr *warehouseRepo) Create(ctx context.Context, warehouse *model.Warehouse) error {
 	query := `
-		INSERT INTO warehouses (id, code, name, address, created_at, updated_at)
-		VALUES ($1, $2, $3, $4, $5, $6)
+		INSERT INTO warehouses (id, name, address, created_at, updated_at)
+		VALUES ($1, $2, $3, $4, $5)
 	`
 
 	// Generate metadata sebelum insert
@@ -44,7 +43,6 @@ func (wr *warehouseRepo) Create(ctx context.Context, warehouse *model.Warehouse)
 	// Execute INSERT statement
 	_, err := wr.db.Exec(ctx, query,
 		warehouse.ID,
-		warehouse.Code,
 		warehouse.Name,
 		warehouse.Address,
 		warehouse.CreatedAt,
@@ -69,7 +67,7 @@ func (wr *warehouseRepo) Create(ctx context.Context, warehouse *model.Warehouse)
 
 func (wr *warehouseRepo) FindByID(ctx context.Context, id uuid.UUID) (*model.Warehouse, error) {
 	query := `
-		SELECT id, code, name, address, created_at, updated_at, deleted_at
+		SELECT id, name, address, created_at, updated_at, deleted_at
 		FROM warehouses WHERE id = $1 AND deleted_at IS NULL
 	`
 
@@ -78,33 +76,6 @@ func (wr *warehouseRepo) FindByID(ctx context.Context, id uuid.UUID) (*model.War
 	// Query single row berdasarkan ID
 	err := wr.db.QueryRow(ctx, query, id).Scan(
 		&warehouse.ID,
-		&warehouse.Code,
-		&warehouse.Name,
-		&warehouse.Address,
-		&warehouse.CreatedAt,
-		&warehouse.UpdatedAt,
-		&warehouse.DeletedAt,
-	)
-	if err != nil {
-		// Warehouse tidak ditemukan
-		return nil, fmt.Errorf("Warehouse not found: %w", err)
-	}
-
-	return &warehouse, nil
-}
-
-func (wr *warehouseRepo) FindByCode(ctx context.Context, code string) (*model.Warehouse, error) {
-	query := `
-		SELECT id, code, name, address, created_at, updated_at, deleted_at
-		FROM warehouses WHERE code = $1 AND deleted_at IS NULL
-	`
-
-	var warehouse model.Warehouse
-
-	// Query single row berdasarkan Code
-	err := wr.db.QueryRow(ctx, query, code).Scan(
-		&warehouse.ID,
-		&warehouse.Code,
 		&warehouse.Name,
 		&warehouse.Address,
 		&warehouse.CreatedAt,
@@ -121,7 +92,7 @@ func (wr *warehouseRepo) FindByCode(ctx context.Context, code string) (*model.Wa
 
 func (wr *warehouseRepo) FindAll(ctx context.Context) ([]model.Warehouse, error) {
 	query := `
-		SELECT id, code, name, address, created_at, updated_at, deleted_at
+		SELECT id, name, address, created_at, updated_at, deleted_at
 		FROM warehouses WHERE deleted_at IS NULL
 		ORDER BY created_at DESC
 	`
@@ -140,7 +111,6 @@ func (wr *warehouseRepo) FindAll(ctx context.Context) ([]model.Warehouse, error)
 		var warehouse model.Warehouse
 		err := rows.Scan(
 			&warehouse.ID,
-			&warehouse.Code,
 			&warehouse.Name,
 			&warehouse.Address,
 			&warehouse.CreatedAt,
@@ -168,8 +138,8 @@ func (wr *warehouseRepo) FindAll(ctx context.Context) ([]model.Warehouse, error)
 func (wr *warehouseRepo) Update(ctx context.Context, warehouse *model.Warehouse) error {
 	query := `
 		UPDATE warehouses
-		SET code = $1, name = $2, address = $3, updated_at = $4
-		WHERE id = $5 AND deleted_at IS NULL
+		SET name = $1, address = $2, updated_at = $3
+		WHERE id = $4 AND deleted_at IS NULL
 	`
 
 	// Update timestamp
@@ -177,7 +147,6 @@ func (wr *warehouseRepo) Update(ctx context.Context, warehouse *model.Warehouse)
 
 	// Execute UPDATE statement
 	result, err := wr.db.Exec(ctx, query,
-		warehouse.Code,
 		warehouse.Name,
 		warehouse.Address,
 		warehouse.UpdatedAt,

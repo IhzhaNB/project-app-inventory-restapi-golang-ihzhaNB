@@ -46,15 +46,9 @@ func (ss *shelfService) Create(ctx context.Context, req shelf.CreateShelfRequest
 		return nil, fmt.Errorf("warehouse not found")
 	}
 
-	// Check uniqueness
-	if existing, _ := ss.repo.Shelf.FindByCodeAndWarehouse(ctx, req.Code, warehouseID); existing != nil {
-		return nil, fmt.Errorf("shelf already exists in this warehouse")
-	}
-
 	// prepare warehouse object
 	newShelf := &model.Shelf{
 		WarehouseID: warehouseID,
-		Code:        req.Code,
 		Name:        req.Name,
 	}
 
@@ -68,7 +62,6 @@ func (ss *shelfService) Create(ctx context.Context, req shelf.CreateShelfRequest
 	response := &shelf.ShelfResponse{
 		ID:          newShelf.ID.String(),
 		WarehouseID: newShelf.WarehouseID.String(),
-		Code:        newShelf.Code,
 		Name:        newShelf.Name,
 		CreatedAt:   newShelf.CreatedAt,
 		UpdatedAt:   newShelf.UpdatedAt,
@@ -89,7 +82,6 @@ func (ss *shelfService) FindByID(ctx context.Context, id uuid.UUID) (*shelf.Shel
 	return &shelf.ShelfResponse{
 		ID:          foundShelf.ID.String(),
 		WarehouseID: foundShelf.WarehouseID.String(),
-		Code:        foundShelf.Code,
 		Name:        foundShelf.Name,
 		CreatedAt:   foundShelf.CreatedAt,
 		UpdatedAt:   foundShelf.UpdatedAt,
@@ -107,7 +99,6 @@ func (ss *shelfService) FindAll(ctx context.Context) ([]shelf.ShelfResponse, err
 		responses = append(responses, shelf.ShelfResponse{
 			ID:          s.ID.String(),
 			WarehouseID: s.WarehouseID.String(),
-			Code:        s.Code,
 			Name:        s.Name,
 			CreatedAt:   s.CreatedAt,
 			UpdatedAt:   s.UpdatedAt,
@@ -135,7 +126,6 @@ func (ss *shelfService) FindByWarehouseID(ctx context.Context, warehouseID uuid.
 		responses = append(responses, shelf.ShelfResponse{
 			ID:          s.ID.String(),
 			WarehouseID: s.WarehouseID.String(),
-			Code:        s.Code,
 			Name:        s.Name,
 			CreatedAt:   s.CreatedAt,
 			UpdatedAt:   s.UpdatedAt,
@@ -152,7 +142,6 @@ func (ss *shelfService) Update(ctx context.Context, id uuid.UUID, req shelf.Upda
 	}
 
 	updated := false
-	var newWarehouseID uuid.UUID
 
 	// Check and update warehouse ID if provided
 	if req.WarehouseID != nil {
@@ -169,24 +158,7 @@ func (ss *shelfService) Update(ctx context.Context, id uuid.UUID, req shelf.Upda
 		if warehouseIDStr != shelfToUpdate.WarehouseID {
 			shelfToUpdate.WarehouseID = warehouseIDStr
 			updated = true
-			newWarehouseID = warehouseIDStr
 		}
-	}
-
-	// Check code uniqueness if code OR warehouse changed
-	if req.Code != nil && *req.Code != shelfToUpdate.Code {
-		warehouseIDToCheck := shelfToUpdate.WarehouseID
-		if newWarehouseID != uuid.Nil {
-			warehouseIDToCheck = newWarehouseID
-		}
-
-		// Cek code unique dalam warehouse yang sama
-		if existing, _ := ss.repo.Shelf.FindByCodeAndWarehouse(ctx, *req.Code, warehouseIDToCheck); existing != nil {
-			return nil, fmt.Errorf("shelf code already exists in this warehouse")
-		}
-
-		shelfToUpdate.Code = *req.Code
-		updated = true
 	}
 
 	if req.Name != nil && *req.Name != shelfToUpdate.Name {
@@ -204,7 +176,6 @@ func (ss *shelfService) Update(ctx context.Context, id uuid.UUID, req shelf.Upda
 	return &shelf.ShelfResponse{
 		ID:          shelfToUpdate.ID.String(),
 		WarehouseID: shelfToUpdate.WarehouseID.String(),
-		Code:        shelfToUpdate.Code,
 		Name:        shelfToUpdate.Name,
 		CreatedAt:   shelfToUpdate.CreatedAt,
 		UpdatedAt:   shelfToUpdate.UpdatedAt,

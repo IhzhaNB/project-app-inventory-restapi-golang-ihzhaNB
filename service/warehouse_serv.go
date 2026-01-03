@@ -35,14 +35,8 @@ func (ws *warehouseService) Create(ctx context.Context, req warehouse.CreateWare
 		return nil, fmt.Errorf("validation failed: %w", err)
 	}
 
-	// Check code uniqueness
-	if existing, _ := ws.repo.Warehouse.FindByCode(ctx, req.Code); existing != nil {
-		return nil, fmt.Errorf("code already exists")
-	}
-
 	// prepare warehouse object
 	newWarehouse := &model.Warehouse{
-		Code:    req.Code,
 		Name:    req.Name,
 		Address: req.Address,
 	}
@@ -56,7 +50,6 @@ func (ws *warehouseService) Create(ctx context.Context, req warehouse.CreateWare
 	// prepare response
 	response := &warehouse.WarehouseResponse{
 		ID:        newWarehouse.ID.String(),
-		Code:      newWarehouse.Code,
 		Name:      newWarehouse.Name,
 		Address:   newWarehouse.Address,
 		CreatedAt: newWarehouse.CreatedAt,
@@ -75,7 +68,6 @@ func (ws *warehouseService) FindByID(ctx context.Context, id uuid.UUID) (*wareho
 
 	return &warehouse.WarehouseResponse{
 		ID:        foundWarehouse.ID.String(),
-		Code:      foundWarehouse.Code,
 		Name:      foundWarehouse.Name,
 		Address:   foundWarehouse.Address,
 		CreatedAt: foundWarehouse.CreatedAt,
@@ -93,7 +85,6 @@ func (ws *warehouseService) FindAll(ctx context.Context) ([]warehouse.WarehouseR
 	for _, w := range warehouses { // w = warehouse (single)
 		responses = append(responses, warehouse.WarehouseResponse{
 			ID:        w.ID.String(),
-			Code:      w.Code,
 			Name:      w.Name,
 			Address:   w.Address,
 			CreatedAt: w.CreatedAt,
@@ -113,11 +104,6 @@ func (ws *warehouseService) Update(ctx context.Context, id uuid.UUID, req wareho
 	updated := false
 
 	// update fields if provided and different
-	if req.Code != nil && *req.Code != warehouseToUpdate.Code {
-		warehouseToUpdate.Code = *req.Code
-		updated = true
-	}
-
 	if req.Name != nil && *req.Name != warehouseToUpdate.Name {
 		warehouseToUpdate.Name = *req.Name
 		updated = true
@@ -137,7 +123,6 @@ func (ws *warehouseService) Update(ctx context.Context, id uuid.UUID, req wareho
 
 	return &warehouse.WarehouseResponse{
 		ID:        warehouseToUpdate.ID.String(),
-		Code:      warehouseToUpdate.Code,
 		Name:      warehouseToUpdate.Name,
 		Address:   warehouseToUpdate.Address,
 		CreatedAt: warehouseToUpdate.CreatedAt,

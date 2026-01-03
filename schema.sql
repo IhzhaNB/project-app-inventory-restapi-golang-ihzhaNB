@@ -25,7 +25,6 @@ CREATE TABLE sessions (
 -- WAREHOUSES: gudang
 CREATE TABLE warehouses (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    code VARCHAR(20) UNIQUE NOT NULL,
     name VARCHAR(100) NOT NULL,
     address TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -47,7 +46,6 @@ CREATE TABLE categories (
 CREATE TABLE shelves (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     warehouse_id UUID NOT NULL REFERENCES warehouses(id),
-    code VARCHAR(20) NOT NULL,
     name VARCHAR(100) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -59,7 +57,6 @@ CREATE TABLE products (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     category_id UUID NOT NULL REFERENCES categories(id),
     shelf_id UUID NOT NULL REFERENCES shelves(id),
-    code VARCHAR(50) UNIQUE NOT NULL,
     name VARCHAR(200) NOT NULL,
     description TEXT,
     unit_price DECIMAL(15,2) NOT NULL DEFAULT 0,
