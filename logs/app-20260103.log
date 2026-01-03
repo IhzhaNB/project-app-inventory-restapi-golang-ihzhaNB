@@ -1,0 +1,138 @@
+2026-01-03T19:51:45.447+0700	INFO	assignment-5/main.go:46	Database connected	{"host": "172.29.48.1", "database": "inventory_system"}
+2026-01-03T19:51:45.458+0700	INFO	assignment-5/main.go:67	Server starting	{"port": "8080", "app": "Inventary_System", "debug": true}
+2026-01-03T19:52:07.824+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "GET", "path": "/", "duration": "82.916µs", "ip": "[::1]:60412", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T19:52:24.712+0700	WARN	repository/session_repo.go:96	Session expired	{"token": "957c6d0a-6b30-4f66-8a06-f435015658d9", "expires_at": "2026-01-03T02:41:25.217Z"}
+2026-01-03T19:52:24.713+0700	WARN	service/auth_serv.go:139	Invalid token	{"token": "957c6d0a-6b30-4f66-8a06-f435015658d9", "error": "session expired"}
+2026-01-03T19:52:24.714+0700	WARN	middleware/auth.go:50	Invalid token	{"token": "957c6d0a-6b30-4f66-8a06-f435015658d9", "error": "invalid or expired token"}
+2026-01-03T19:52:24.715+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "GET", "path": "/api/admin/users/", "duration": "98.090875ms", "ip": "[::1]:60412", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T19:53:12.100+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/auth/logout", "duration": "6.362151ms", "ip": "[::1]:60412", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T19:53:35.608+0700	WARN	repository/session_repo.go:96	Session expired	{"token": "957c6d0a-6b30-4f66-8a06-f435015658d9", "expires_at": "2026-01-03T02:41:25.217Z"}
+2026-01-03T19:53:35.609+0700	WARN	service/auth_serv.go:139	Invalid token	{"token": "957c6d0a-6b30-4f66-8a06-f435015658d9", "error": "session expired"}
+2026-01-03T19:53:35.611+0700	WARN	middleware/auth.go:50	Invalid token	{"token": "957c6d0a-6b30-4f66-8a06-f435015658d9", "error": "invalid or expired token"}
+2026-01-03T19:53:35.611+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "GET", "path": "/api/admin/users/", "duration": "79.841422ms", "ip": "[::1]:60412", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T19:54:45.183+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/auth/logout", "duration": "1.792943ms", "ip": "[::1]:49962", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T19:59:20.441+0700	INFO	assignment-5/main.go:84	Shutting down server...
+2026-01-03T19:59:20.540+0700	INFO	assignment-5/main.go:93	Server stopped
+2026-01-03T19:59:33.229+0700	INFO	assignment-5/main.go:46	Database connected	{"host": "172.29.48.1", "database": "inventory_system"}
+2026-01-03T19:59:33.230+0700	INFO	assignment-5/main.go:67	Server starting	{"port": "8080", "app": "Inventary_System", "debug": true}
+2026-01-03T19:59:39.092+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/auth/logout", "duration": "201.675µs", "ip": "[::1]:35042", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T19:59:49.644+0700	WARN	repository/session_repo.go:96	Session expired	{"token": "957c6d0a-6b30-4f66-8a06-f435015658d9", "expires_at": "2026-01-03T02:41:25.217Z"}
+2026-01-03T19:59:49.645+0700	WARN	service/auth_serv.go:139	Invalid token	{"token": "957c6d0a-6b30-4f66-8a06-f435015658d9", "error": "session expired"}
+2026-01-03T19:59:49.645+0700	WARN	middleware/auth.go:56	Invalid token	{"token": "957c6d0a-6b30-4f66-8a06-f435015658d9", "error": "invalid or expired token"}
+2026-01-03T19:59:49.645+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "GET", "path": "/api/admin/users/", "duration": "21.28806ms", "ip": "[::1]:35042", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T19:59:51.656+0700	WARN	repository/session_repo.go:96	Session expired	{"token": "957c6d0a-6b30-4f66-8a06-f435015658d9", "expires_at": "2026-01-03T02:41:25.217Z"}
+2026-01-03T19:59:51.656+0700	WARN	service/auth_serv.go:139	Invalid token	{"token": "957c6d0a-6b30-4f66-8a06-f435015658d9", "error": "session expired"}
+2026-01-03T19:59:51.656+0700	WARN	middleware/auth.go:56	Invalid token	{"token": "957c6d0a-6b30-4f66-8a06-f435015658d9", "error": "invalid or expired token"}
+2026-01-03T19:59:51.657+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "GET", "path": "/api/admin/users/", "duration": "4.062834ms", "ip": "[::1]:35042", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T20:00:35.050+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "GET", "path": "/api/admin/users/", "duration": "186.89µs", "ip": "[::1]:35042", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T20:00:59.875+0700	INFO	assignment-5/main.go:84	Shutting down server...
+2026-01-03T20:00:59.878+0700	INFO	assignment-5/main.go:93	Server stopped
+2026-01-03T20:01:05.187+0700	INFO	assignment-5/main.go:46	Database connected	{"host": "172.29.48.1", "database": "inventory_system"}
+2026-01-03T20:01:05.188+0700	INFO	assignment-5/main.go:67	Server starting	{"port": "8080", "app": "Inventary_System", "debug": true}
+2026-01-03T20:01:08.481+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "GET", "path": "/api/admin/users/", "duration": "194.798µs", "ip": "[::1]:42898", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T20:01:24.122+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "GET", "path": "/", "duration": "13.399µs", "ip": "[::1]:42898", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T20:01:43.887+0700	WARN	repository/user_repo.go:134	User not found	{"email": "uperadmin@gmail.com", "error": "no rows in result set"}
+2026-01-03T20:01:43.888+0700	WARN	service/auth_serv.go:61	Login failed: user not found	{"email": "uperadmin@gmail.com"}
+2026-01-03T20:01:43.888+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/auth/login", "duration": "32.842365ms", "ip": "[::1]:42898", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T20:01:51.536+0700	WARN	repository/user_repo.go:134	User not found	{"email": "uperadmin@gmail.com", "error": "no rows in result set"}
+2026-01-03T20:01:51.536+0700	WARN	service/auth_serv.go:61	Login failed: user not found	{"email": "uperadmin@gmail.com"}
+2026-01-03T20:01:51.536+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/auth/login", "duration": "2.632931ms", "ip": "[::1]:42898", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T20:02:22.982+0700	INFO	repository/session_repo.go:59	Session created	{"session_id": "842ce66d-abb9-4467-ade7-18c201565139", "user_id": "0d022498-d8b0-4f4b-8c8f-4c1ee7bc39b3"}
+2026-01-03T20:02:22.982+0700	INFO	service/auth_serv.go:107	User logged in	{"user_id": "0d022498-d8b0-4f4b-8c8f-4c1ee7bc39b3", "role": "super_admin"}
+2026-01-03T20:02:22.982+0700	INFO	handler/auth_hand.go:60	User logged in	{"email": "superadmin@gmail.com"}
+2026-01-03T20:02:22.982+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/auth/login", "duration": "104.026805ms", "ip": "[::1]:42898", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T20:02:45.345+0700	INFO	repository/user_repo.go:190	Fetched all users	{"total_users": 2}
+2026-01-03T20:02:45.346+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "GET", "path": "/api/admin/users/", "duration": "27.405322ms", "ip": "[::1]:42898", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T20:04:08.747+0700	INFO	repository/user_repo.go:251	User soft deleted	{"id": "111b55ec-e5bf-4e5e-b413-73aa93cf9c52"}
+2026-01-03T20:04:08.747+0700	INFO	service/user_serv.go:192	User deleted	{"user_id": "111b55ec-e5bf-4e5e-b413-73aa93cf9c52"}
+2026-01-03T20:04:08.747+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "DELETE", "path": "/api/admin/users/111b55ec-e5bf-4e5e-b413-73aa93cf9c52", "duration": "19.464794ms", "ip": "[::1]:37792", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T20:04:15.683+0700	INFO	repository/user_repo.go:190	Fetched all users	{"total_users": 1}
+2026-01-03T20:04:15.683+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "GET", "path": "/api/admin/users/", "duration": "6.983335ms", "ip": "[::1]:37792", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T20:05:33.189+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "PUT", "path": "/api/users/0d022498-d8b0-4f4b-8c8f-4c1ee7bc39b3", "duration": "110.401µs", "ip": "[::1]:38918", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T20:05:44.589+0700	INFO	repository/user_repo.go:229	User updated	{"id": "0d022498-d8b0-4f4b-8c8f-4c1ee7bc39b3"}
+2026-01-03T20:05:44.590+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "PUT", "path": "/api/users/0d022498-d8b0-4f4b-8c8f-4c1ee7bc39b3", "duration": "24.590443ms", "ip": "[::1]:38918", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T20:06:16.888+0700	WARN	repository/session_repo.go:96	Session expired	{"token": "957c6d0a-6b30-4f66-8a06-f435015658d9", "expires_at": "2026-01-03T02:41:25.217Z"}
+2026-01-03T20:06:16.889+0700	WARN	service/auth_serv.go:139	Invalid token	{"token": "957c6d0a-6b30-4f66-8a06-f435015658d9", "error": "session expired"}
+2026-01-03T20:06:16.889+0700	WARN	middleware/auth.go:50	Invalid token	{"token": "957c6d0a-6b30-4f66-8a06-f435015658d9", "error": "invalid or expired token"}
+2026-01-03T20:06:16.890+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/admin/users/", "duration": "5.557731ms", "ip": "[::1]:38918", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T20:06:37.030+0700	WARN	repository/user_repo.go:134	User not found	{"email": "staff@inv.com", "error": "no rows in result set"}
+2026-01-03T20:06:37.136+0700	ERROR	repository/user_repo.go:60	Failed to create user	{"error": "ERROR: duplicate key value violates unique constraint \"users_username_key\" (SQLSTATE 23505)", "email": "staff@inv.com"}
+2026-01-03T20:06:37.136+0700	ERROR	service/user_serv.go:63	Failed to create user	{"error": "Create user Failed: ERROR: duplicate key value violates unique constraint \"users_username_key\" (SQLSTATE 23505)"}
+2026-01-03T20:06:37.136+0700	ERROR	handler/user_hand.go:44	Failed to create user	{"error": "failed to create user"}
+2026-01-03T20:06:37.136+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/admin/users/", "duration": "114.864117ms", "ip": "[::1]:38918", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T20:07:04.112+0700	WARN	repository/user_repo.go:134	User not found	{"email": "staff1@inv.com", "error": "no rows in result set"}
+2026-01-03T20:07:04.212+0700	INFO	repository/user_repo.go:68	User Created	{"id": "fc14b16c-01af-46fa-985f-feb4af030fc0", "email": "staff1@inv.com"}
+2026-01-03T20:07:04.212+0700	INFO	service/user_serv.go:79	User created	{"user_id": "fc14b16c-01af-46fa-985f-feb4af030fc0"}
+2026-01-03T20:07:04.212+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/admin/users/", "duration": "107.517945ms", "ip": "[::1]:38918", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T20:07:33.925+0700	WARN	repository/user_repo.go:134	User not found	{"email": "admin1@inv.com", "error": "no rows in result set"}
+2026-01-03T20:07:34.039+0700	INFO	repository/user_repo.go:68	User Created	{"id": "6b03e9f8-761f-4bde-8017-55a19b60bff9", "email": "admin1@inv.com"}
+2026-01-03T20:07:34.040+0700	INFO	service/user_serv.go:79	User created	{"user_id": "6b03e9f8-761f-4bde-8017-55a19b60bff9"}
+2026-01-03T20:07:34.041+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/admin/users/", "duration": "120.286179ms", "ip": "[::1]:38918", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T20:07:42.138+0700	INFO	repository/user_repo.go:190	Fetched all users	{"total_users": 3}
+2026-01-03T20:07:42.138+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "GET", "path": "/api/admin/users/", "duration": "7.884422ms", "ip": "[::1]:38918", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T20:08:11.096+0700	WARN	repository/session_repo.go:96	Session expired	{"token": "957c6d0a-6b30-4f66-8a06-f435015658d9", "expires_at": "2026-01-03T02:41:25.217Z"}
+2026-01-03T20:08:11.096+0700	WARN	service/auth_serv.go:139	Invalid token	{"token": "957c6d0a-6b30-4f66-8a06-f435015658d9", "error": "session expired"}
+2026-01-03T20:08:11.096+0700	WARN	middleware/auth.go:50	Invalid token	{"token": "957c6d0a-6b30-4f66-8a06-f435015658d9", "error": "invalid or expired token"}
+2026-01-03T20:08:11.097+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "GET", "path": "/api/users/6b03e9f8-761f-4bde-8017-55a19b60bff9", "duration": "2.637804ms", "ip": "[::1]:38918", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T20:08:24.439+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "GET", "path": "/api/users/6b03e9f8-761f-4bde-8017-55a19b60bff9", "duration": "4.421508ms", "ip": "[::1]:38918", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T20:08:41.069+0700	WARN	repository/session_repo.go:96	Session expired	{"token": "957c6d0a-6b30-4f66-8a06-f435015658d9", "expires_at": "2026-01-03T02:41:25.217Z"}
+2026-01-03T20:08:41.069+0700	WARN	service/auth_serv.go:139	Invalid token	{"token": "957c6d0a-6b30-4f66-8a06-f435015658d9", "error": "session expired"}
+2026-01-03T20:08:41.069+0700	WARN	middleware/auth.go:50	Invalid token	{"token": "957c6d0a-6b30-4f66-8a06-f435015658d9", "error": "invalid or expired token"}
+2026-01-03T20:08:41.069+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "GET", "path": "/api/warehouses/", "duration": "1.715401ms", "ip": "[::1]:38918", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T20:08:49.333+0700	INFO	repository/warehouse_repo.go:172	Fetched all warehouse	{"total_warehouses": 0}
+2026-01-03T20:08:49.335+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "GET", "path": "/api/warehouses/", "duration": "16.025323ms", "ip": "[::1]:38918", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T20:10:00.724+0700	WARN	repository/warehouse_repo.go:120	Warehouse not found	{"code": "WH-001", "error": "no rows in result set"}
+2026-01-03T20:10:00.729+0700	INFO	repository/warehouse_repo.go:62	Warehouse Created	{"id": "61b6627d-8d31-4a83-a459-b24a8ff246a0", "name": "Gudang Utama"}
+2026-01-03T20:10:00.729+0700	INFO	service/warehouse_serv.go:66	Warehouse created	{"warehouse_id": "61b6627d-8d31-4a83-a459-b24a8ff246a0"}
+2026-01-03T20:10:00.729+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/admin/warehouses/", "duration": "17.943303ms", "ip": "[::1]:44248", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T20:10:37.366+0700	INFO	repository/warehouse_repo.go:172	Fetched all warehouse	{"total_warehouses": 1}
+2026-01-03T20:10:37.367+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "GET", "path": "/api/warehouses/", "duration": "5.561605ms", "ip": "[::1]:44248", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T20:10:51.031+0700	WARN	repository/session_repo.go:96	Session expired	{"token": "957c6d0a-6b30-4f66-8a06-f435015658d9", "expires_at": "2026-01-03T02:41:25.217Z"}
+2026-01-03T20:10:51.032+0700	WARN	service/auth_serv.go:139	Invalid token	{"token": "957c6d0a-6b30-4f66-8a06-f435015658d9", "error": "session expired"}
+2026-01-03T20:10:51.032+0700	WARN	middleware/auth.go:50	Invalid token	{"token": "957c6d0a-6b30-4f66-8a06-f435015658d9", "error": "invalid or expired token"}
+2026-01-03T20:10:51.032+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "GET", "path": "/api/warehouses/61b6627d-8d31-4a83-a459-b24a8ff246a0", "duration": "2.467804ms", "ip": "[::1]:44248", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T20:11:02.979+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "GET", "path": "/api/warehouses/61b6627d-8d31-4a83-a459-b24a8ff246a0", "duration": "5.710008ms", "ip": "[::1]:44248", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T20:13:56.051+0700	WARN	repository/session_repo.go:96	Session expired	{"token": "957c6d0a-6b30-4f66-8a06-f435015658d9", "expires_at": "2026-01-03T02:41:25.217Z"}
+2026-01-03T20:13:56.051+0700	WARN	service/auth_serv.go:139	Invalid token	{"token": "957c6d0a-6b30-4f66-8a06-f435015658d9", "error": "session expired"}
+2026-01-03T20:13:56.052+0700	WARN	middleware/auth.go:50	Invalid token	{"token": "957c6d0a-6b30-4f66-8a06-f435015658d9", "error": "invalid or expired token"}
+2026-01-03T20:13:56.052+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "DELETE", "path": "/api/admin/warehouses/61b6627d-8d31-4a83-a459-b24a8ff246a0", "duration": "2.778701ms", "ip": "[::1]:51714", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T20:14:07.670+0700	INFO	repository/warehouse_repo.go:231	Warehouse deleted	{"id": "61b6627d-8d31-4a83-a459-b24a8ff246a0"}
+2026-01-03T20:14:07.671+0700	INFO	service/warehouse_serv.go:157	Warehouse deleted	{"warehouse_id": "61b6627d-8d31-4a83-a459-b24a8ff246a0"}
+2026-01-03T20:14:07.671+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "DELETE", "path": "/api/admin/warehouses/61b6627d-8d31-4a83-a459-b24a8ff246a0", "duration": "15.470905ms", "ip": "[::1]:51714", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T20:14:44.237+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/admin/warehouses/", "duration": "4.470601ms", "ip": "[::1]:51714", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T20:15:08.274+0700	WARN	repository/warehouse_repo.go:120	Warehouse not found	{"code": "WH-JKT-001", "error": "no rows in result set"}
+2026-01-03T20:15:08.276+0700	INFO	repository/warehouse_repo.go:62	Warehouse Created	{"id": "10ef012f-00a1-43db-955e-ef5185bce6f4", "name": "Gudang Pusat Jakarta"}
+2026-01-03T20:15:08.276+0700	INFO	service/warehouse_serv.go:66	Warehouse created	{"warehouse_id": "10ef012f-00a1-43db-955e-ef5185bce6f4"}
+2026-01-03T20:15:08.276+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/admin/warehouses/", "duration": "5.7968ms", "ip": "[::1]:51714", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T20:15:17.550+0700	WARN	repository/warehouse_repo.go:120	Warehouse not found	{"code": "WH-BDG-001", "error": "no rows in result set"}
+2026-01-03T20:15:17.552+0700	INFO	repository/warehouse_repo.go:62	Warehouse Created	{"id": "a188c2aa-2c67-4cf9-bec7-fb7e688805cb", "name": "Gudang Bandung"}
+2026-01-03T20:15:17.552+0700	INFO	service/warehouse_serv.go:66	Warehouse created	{"warehouse_id": "a188c2aa-2c67-4cf9-bec7-fb7e688805cb"}
+2026-01-03T20:15:17.553+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/admin/warehouses/", "duration": "9.584101ms", "ip": "[::1]:51714", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T20:15:26.307+0700	WARN	repository/warehouse_repo.go:120	Warehouse not found	{"code": "WH-SBY-001", "error": "no rows in result set"}
+2026-01-03T20:15:26.308+0700	INFO	repository/warehouse_repo.go:62	Warehouse Created	{"id": "f882ecc2-f2be-4da7-9769-de1145023b5a", "name": "Gudang Surabaya"}
+2026-01-03T20:15:26.308+0700	INFO	service/warehouse_serv.go:66	Warehouse created	{"warehouse_id": "f882ecc2-f2be-4da7-9769-de1145023b5a"}
+2026-01-03T20:15:26.308+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/admin/warehouses/", "duration": "4.671902ms", "ip": "[::1]:51714", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T20:15:34.609+0700	WARN	repository/warehouse_repo.go:120	Warehouse not found	{"code": "WH-MKS-001", "error": "no rows in result set"}
+2026-01-03T20:15:34.611+0700	INFO	repository/warehouse_repo.go:62	Warehouse Created	{"id": "e817efff-bd09-4777-b336-32b4df96744a", "name": "Gudang Makassar"}
+2026-01-03T20:15:34.612+0700	INFO	service/warehouse_serv.go:66	Warehouse created	{"warehouse_id": "e817efff-bd09-4777-b336-32b4df96744a"}
+2026-01-03T20:15:34.612+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/admin/warehouses/", "duration": "6.446901ms", "ip": "[::1]:51714", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T20:15:42.984+0700	WARN	repository/warehouse_repo.go:120	Warehouse not found	{"code": "WH-MDN-001", "error": "no rows in result set"}
+2026-01-03T20:15:42.988+0700	INFO	repository/warehouse_repo.go:62	Warehouse Created	{"id": "10d80eba-214c-4da9-87e5-1b23befc91d4", "name": "Gudang Medan"}
+2026-01-03T20:15:42.988+0700	INFO	service/warehouse_serv.go:66	Warehouse created	{"warehouse_id": "10d80eba-214c-4da9-87e5-1b23befc91d4"}
+2026-01-03T20:15:42.989+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/admin/warehouses/", "duration": "8.547706ms", "ip": "[::1]:51714", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T20:15:50.858+0700	WARN	repository/warehouse_repo.go:120	Warehouse not found	{"code": "WH-BAL-001", "error": "no rows in result set"}
+2026-01-03T20:15:50.869+0700	INFO	repository/warehouse_repo.go:62	Warehouse Created	{"id": "78a3b28e-2efc-45be-8acc-cd0e33443610", "name": "Gudang Bali"}
+2026-01-03T20:15:50.869+0700	INFO	service/warehouse_serv.go:66	Warehouse created	{"warehouse_id": "78a3b28e-2efc-45be-8acc-cd0e33443610"}
+2026-01-03T20:15:50.869+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/admin/warehouses/", "duration": "16.90631ms", "ip": "[::1]:51714", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T20:16:00.499+0700	WARN	repository/warehouse_repo.go:120	Warehouse not found	{"code": "WH-JOG-001", "error": "no rows in result set"}
+2026-01-03T20:16:00.503+0700	INFO	repository/warehouse_repo.go:62	Warehouse Created	{"id": "177fd5af-3fa2-463a-b67b-fc5a353cbbc6", "name": "Gudang Yogyakarta"}
+2026-01-03T20:16:00.503+0700	INFO	service/warehouse_serv.go:66	Warehouse created	{"warehouse_id": "177fd5af-3fa2-463a-b67b-fc5a353cbbc6"}
+2026-01-03T20:16:00.503+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/admin/warehouses/", "duration": "7.66659ms", "ip": "[::1]:51714", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T20:16:09.269+0700	WARN	repository/warehouse_repo.go:120	Warehouse not found	{"code": "WH-SMR-001", "error": "no rows in result set"}
+2026-01-03T20:16:09.273+0700	INFO	repository/warehouse_repo.go:62	Warehouse Created	{"id": "93613fd2-88d2-4eb9-9e6c-273faeaf0b62", "name": "Gudang Semarang"}
+2026-01-03T20:16:09.273+0700	INFO	service/warehouse_serv.go:66	Warehouse created	{"warehouse_id": "93613fd2-88d2-4eb9-9e6c-273faeaf0b62"}
+2026-01-03T20:16:09.273+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/admin/warehouses/", "duration": "11.924706ms", "ip": "[::1]:51714", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T20:16:17.046+0700	INFO	repository/warehouse_repo.go:172	Fetched all warehouse	{"total_warehouses": 8}
+2026-01-03T20:16:17.047+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "GET", "path": "/api/warehouses/", "duration": "4.369195ms", "ip": "[::1]:51714", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-03T20:19:39.720+0700	INFO	assignment-5/main.go:84	Shutting down server...
+2026-01-03T20:19:39.728+0700	INFO	assignment-5/main.go:93	Server stopped

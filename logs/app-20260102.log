@@ -1,0 +1,100 @@
+2026-01-02T01:26:21.708+0700	FATAL	assignment-5/main.go:42	Failed to connect database	{"error": "create pool: MaxSize must be >= 1"}
+2026-01-02T01:28:51.654+0700	FATAL	assignment-5/main.go:42	Failed to connect database	{"error": "create pool: MaxSize must be >= 1"}
+2026-01-02T01:30:51.320+0700	FATAL	assignment-5/main.go:42	Failed to connect database	{"error": "ping db: failed to connect to `user=password= database=sslmode=disable`:\n\thostname resolving error: lookup : no such host\n\tlookup : no such host"}
+2026-01-02T01:32:59.789+0700	FATAL	assignment-5/main.go:42	Failed to connect database	{"error": "ping db: failed to connect to `user= database=`: /tmp/.s.PGSQL.5432 (/tmp): dial error: dial unix /tmp/.s.PGSQL.5432: connect: no such file or directory"}
+2026-01-02T01:38:37.345+0700	FATAL	assignment-5/main.go:42	Failed to connect database	{"error": "create pool: MaxSize must be >= 1"}
+2026-01-02T01:39:30.457+0700	FATAL	assignment-5/main.go:42	Failed to connect database	{"error": "create pool: MaxSize must be >= 1"}
+2026-01-02T01:39:53.922+0700	FATAL	assignment-5/main.go:42	Failed to connect database	{"error": "ping db: failed to connect to `user=password= database=sslmode=disable`:\n\thostname resolving error: lookup : no such host\n\tlookup : no such host"}
+2026-01-02T01:41:41.958+0700	FATAL	assignment-5/main.go:42	Failed to connect database	{"error": "ping db: failed to connect to `user=postgres database=inventary_system`: 172.29.48.1:5432 (172.29.48.1): server error: FATAL: database \"inventary_system\" does not exist (SQLSTATE 3D000)"}
+2026-01-02T01:41:56.806+0700	FATAL	assignment-5/main.go:42	Failed to connect database	{"error": "ping db: failed to connect to `user=postgres database=inventary_system`: 172.29.48.1:5432 (172.29.48.1): server error: FATAL: database \"inventary_system\" does not exist (SQLSTATE 3D000)"}
+2026-01-02T01:44:39.135+0700	INFO	assignment-5/main.go:46	Database connected	{"host": "172.29.48.1", "database": "inventory_system"}
+2026-01-02T01:44:39.138+0700	INFO	assignment-5/main.go:67	Server starting	{"port": "8080", "app": "Inventary_System", "debug": true}
+2026-01-02T01:47:11.300+0700	INFO	assignment-5/main.go:84	Shutting down server...
+2026-01-02T01:47:11.340+0700	INFO	assignment-5/main.go:93	Server stopped
+2026-01-02T01:47:35.866+0700	INFO	assignment-5/main.go:46	Database connected	{"host": "172.29.48.1", "database": "inventory_system"}
+2026-01-02T01:47:35.868+0700	INFO	assignment-5/main.go:67	Server starting	{"port": "8080", "app": "Inventary_System", "debug": true}
+2026-01-02T01:47:40.271+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "GET", "path": "/", "duration": "4.582823ms", "ip": "[::1]:33162", "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2026-01-02T01:47:38.470+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "GET", "path": "/favicon.ico", "duration": "44.958µs", "ip": "[::1]:33162", "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2026-01-02T01:47:48.640+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "GET", "path": "/", "duration": "43.442µs", "ip": "[::1]:35118", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-02T01:50:16.003+0700	WARN	service/auth_serv.go:47	Login failed: invalid password	{"email": "superadmin@gmail.com"}
+2026-01-02T01:50:16.005+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/auth/login", "duration": "154.737745ms", "ip": "[::1]:55634", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-02T01:54:57.449+0700	INFO	assignment-5/main.go:84	Shutting down server...
+2026-01-02T01:54:57.454+0700	INFO	assignment-5/main.go:93	Server stopped
+2026-01-02T02:00:04.741+0700	INFO	assignment-5/main.go:46	Database connected	{"host": "172.29.48.1", "database": "inventory_system"}
+2026-01-02T02:00:04.742+0700	INFO	assignment-5/main.go:67	Server starting	{"port": "8080", "app": "Inventary_System", "debug": true}
+2026-01-02T02:00:08.894+0700	INFO	repository/session_repo.go:59	Session created	{"session_id": "357c6c6c-b3b6-4ce5-8d1d-a331d0517560", "user_id": "0d022498-d8b0-4f4b-8c8f-4c1ee7bc39b3"}
+2026-01-02T02:00:08.895+0700	INFO	service/auth_serv.go:83	User logged in	{"user_id": "0d022498-d8b0-4f4b-8c8f-4c1ee7bc39b3", "role": "super_admin"}
+2026-01-02T02:00:08.895+0700	INFO	handler/auth_hand.go:48	User logged in	{"email": "superadmin@gmail.com"}
+2026-01-02T02:00:08.895+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/auth/login", "duration": "173.40357ms", "ip": "[::1]:41730", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-02T02:01:09.162+0700	INFO	assignment-5/main.go:84	Shutting down server...
+2026-01-02T02:01:09.167+0700	INFO	assignment-5/main.go:93	Server stopped
+2026-01-02T02:15:35.628+0700	INFO	assignment-5/main.go:46	Database connected	{"host": "172.29.48.1", "database": "inventory_system"}
+2026-01-02T02:15:35.630+0700	INFO	assignment-5/main.go:67	Server starting	{"port": "8080", "app": "Inventary_System", "debug": true}
+2026-01-02T02:15:39.735+0700	INFO	repository/session_repo.go:59	Session created	{"session_id": "9d30518b-13db-42ea-acdb-79682ef7381d", "user_id": "0d022498-d8b0-4f4b-8c8f-4c1ee7bc39b3"}
+2026-01-02T02:15:39.735+0700	INFO	service/auth_serv.go:83	User logged in	{"user_id": "0d022498-d8b0-4f4b-8c8f-4c1ee7bc39b3", "role": "super_admin"}
+2026-01-02T02:15:39.735+0700	INFO	handler/auth_hand.go:48	User logged in	{"email": "superadmin@gmail.com"}
+2026-01-02T02:15:39.736+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/auth/login", "duration": "131.598297ms", "ip": "[::1]:50626", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-02T02:18:40.556+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "GET", "path": "/api/auth/users/", "duration": "194.35µs", "ip": "[::1]:45414", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-02T02:18:57.415+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "GET", "path": "/api/users/", "duration": "155.134µs", "ip": "[::1]:45414", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-02T02:19:04.209+0700	INFO	repository/session_repo.go:59	Session created	{"session_id": "e973753b-d631-4cba-8178-10be5ebfa5e3", "user_id": "0d022498-d8b0-4f4b-8c8f-4c1ee7bc39b3"}
+2026-01-02T02:19:04.209+0700	INFO	service/auth_serv.go:83	User logged in	{"user_id": "0d022498-d8b0-4f4b-8c8f-4c1ee7bc39b3", "role": "super_admin"}
+2026-01-02T02:19:04.210+0700	INFO	handler/auth_hand.go:48	User logged in	{"email": "superadmin@gmail.com"}
+2026-01-02T02:19:04.210+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/auth/login", "duration": "107.889989ms", "ip": "[::1]:45414", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-02T02:19:37.962+0700	INFO	repository/user_repo.go:190	Fetched all users	{"total_users": 2}
+2026-01-02T02:19:37.963+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "GET", "path": "/api/users/", "duration": "24.97689ms", "ip": "[::1]:45414", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-02T02:20:45.364+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/auth/users", "duration": "61.533µs", "ip": "[::1]:39684", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-02T02:20:54.651+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/auth/users/", "duration": "58.825µs", "ip": "[::1]:39684", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-02T02:21:10.465+0700	INFO	repository/session_repo.go:131	Session revoked	{"token": "55b1d517-1cda-47d6-879d-bcd275cb87c8"}
+2026-01-02T02:21:10.465+0700	INFO	service/auth_serv.go:97	User logged out	{"token": "55b1d517-1cda-47d6-879d-bcd275cb87c8"}
+2026-01-02T02:21:10.465+0700	INFO	handler/auth_hand.go:72	User logged out	{"token": "55b1d517-1cda-47d6-879d-bcd275cb87c8"}
+2026-01-02T02:21:10.465+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/auth/logout", "duration": "13.757461ms", "ip": "[::1]:39684", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-02T02:22:40.708+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "GET", "path": "/api/users/", "duration": "231.4µs", "ip": "[::1]:40634", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-02T02:23:03.497+0700	WARN	repository/session_repo.go:87	Session not found or revoked	{"token": "55b1d517-1cda-47d6-879d-bcd275cb87c8", "error": "no rows in result set"}
+2026-01-02T02:23:03.497+0700	WARN	service/auth_serv.go:104	Invalid token	{"token": "55b1d517-1cda-47d6-879d-bcd275cb87c8", "error": "session not found: no rows in result set"}
+2026-01-02T02:23:03.497+0700	WARN	middleware/auth.go:50	Invalid token	{"token": "55b1d517-1cda-47d6-879d-bcd275cb87c8", "error": "invalid or expired token"}
+2026-01-02T02:23:03.497+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "GET", "path": "/api/users/", "duration": "2.485057ms", "ip": "[::1]:40634", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-02T02:23:21.852+0700	INFO	repository/session_repo.go:59	Session created	{"session_id": "466cb355-4e20-4cbf-9f73-085a7c79a85e", "user_id": "0d022498-d8b0-4f4b-8c8f-4c1ee7bc39b3"}
+2026-01-02T02:23:21.852+0700	INFO	service/auth_serv.go:83	User logged in	{"user_id": "0d022498-d8b0-4f4b-8c8f-4c1ee7bc39b3", "role": "super_admin"}
+2026-01-02T02:23:21.852+0700	INFO	handler/auth_hand.go:48	User logged in	{"email": "superadmin@gmail.com"}
+2026-01-02T02:23:21.853+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/auth/login", "duration": "71.915429ms", "ip": "[::1]:40634", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-02T02:23:41.310+0700	WARN	repository/session_repo.go:87	Session not found or revoked	{"token": "55b1d517-1cda-47d6-879d-bcd275cb87c8", "error": "no rows in result set"}
+2026-01-02T02:23:41.310+0700	WARN	service/auth_serv.go:104	Invalid token	{"token": "55b1d517-1cda-47d6-879d-bcd275cb87c8", "error": "session not found: no rows in result set"}
+2026-01-02T02:23:41.310+0700	WARN	middleware/auth.go:50	Invalid token	{"token": "55b1d517-1cda-47d6-879d-bcd275cb87c8", "error": "invalid or expired token"}
+2026-01-02T02:23:41.311+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "GET", "path": "/api/users/", "duration": "1.839607ms", "ip": "[::1]:40634", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-02T02:23:51.913+0700	INFO	repository/user_repo.go:190	Fetched all users	{"total_users": 2}
+2026-01-02T02:23:51.914+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "GET", "path": "/api/users/", "duration": "5.998089ms", "ip": "[::1]:40634", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-02T02:25:20.607+0700	WARN	repository/user_repo.go:134	User not found	{"email": "staff@inv.com", "error": "no rows in result set"}
+2026-01-02T02:25:20.700+0700	INFO	repository/user_repo.go:68	User Created	{"id": "111b55ec-e5bf-4e5e-b413-73aa93cf9c52", "email": "staff@inv.com"}
+2026-01-02T02:25:20.700+0700	INFO	service/user_serv.go:82	User created	{"user_id": "111b55ec-e5bf-4e5e-b413-73aa93cf9c52"}
+2026-01-02T02:25:20.700+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/users/", "duration": "99.590576ms", "ip": "[::1]:44672", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-02T02:25:38.859+0700	WARN	service/auth_serv.go:47	Login failed: invalid password	{"email": "admin@gmail.com"}
+2026-01-02T02:25:38.859+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/auth/login", "duration": "81.013909ms", "ip": "[::1]:44672", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-02T02:26:56.967+0700	INFO	repository/user_repo.go:190	Fetched all users	{"total_users": 3}
+2026-01-02T02:26:56.968+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "GET", "path": "/api/users/", "duration": "7.458097ms", "ip": "[::1]:33966", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-02T02:27:29.653+0700	INFO	repository/user_repo.go:251	User soft deleted	{"id": "af10495c-7e5e-425d-885a-f3136f591f3e"}
+2026-01-02T02:27:29.653+0700	INFO	service/user_serv.go:182	User deleted	{"user_id": "af10495c-7e5e-425d-885a-f3136f591f3e"}
+2026-01-02T02:27:29.653+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "DELETE", "path": "/api/users/af10495c-7e5e-425d-885a-f3136f591f3e", "duration": "18.583709ms", "ip": "[::1]:33966", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-02T02:27:35.694+0700	INFO	repository/user_repo.go:190	Fetched all users	{"total_users": 2}
+2026-01-02T02:27:35.694+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "GET", "path": "/api/users/", "duration": "3.081973ms", "ip": "[::1]:33966", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-02T02:28:22.119+0700	WARN	service/auth_serv.go:47	Login failed: invalid password	{"email": "staff@inv.com"}
+2026-01-02T02:28:22.120+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/auth/login", "duration": "79.901975ms", "ip": "[::1]:33966", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-02T02:28:58.483+0700	INFO	repository/session_repo.go:59	Session created	{"session_id": "bf71152d-c08d-4481-a9dd-d37309decd1b", "user_id": "111b55ec-e5bf-4e5e-b413-73aa93cf9c52"}
+2026-01-02T02:28:58.484+0700	INFO	service/auth_serv.go:83	User logged in	{"user_id": "111b55ec-e5bf-4e5e-b413-73aa93cf9c52", "role": "staff"}
+2026-01-02T02:28:58.484+0700	INFO	handler/auth_hand.go:48	User logged in	{"email": "staff@inv.com"}
+2026-01-02T02:28:58.484+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/auth/login", "duration": "72.800621ms", "ip": "[::1]:33966", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-02T02:29:35.982+0700	INFO	repository/user_repo.go:190	Fetched all users	{"total_users": 2}
+2026-01-02T02:29:35.983+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "GET", "path": "/api/users/", "duration": "5.385356ms", "ip": "[::1]:33966", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-02T02:31:40.359+0700	INFO	assignment-5/main.go:84	Shutting down server...
+2026-01-02T02:31:40.366+0700	INFO	assignment-5/main.go:93	Server stopped
+2026-01-02T02:41:15.931+0700	INFO	assignment-5/main.go:46	Database connected	{"host": "172.29.48.1", "database": "inventory_system"}
+2026-01-02T02:41:15.931+0700	INFO	assignment-5/main.go:67	Server starting	{"port": "8080", "app": "Inventary_System", "debug": true}
+2026-01-02T02:41:25.234+0700	INFO	repository/session_repo.go:59	Session created	{"session_id": "37bcfc61-4674-4662-a825-369fe0b4fed4", "user_id": "111b55ec-e5bf-4e5e-b413-73aa93cf9c52"}
+2026-01-02T02:41:25.234+0700	INFO	service/auth_serv.go:83	User logged in	{"user_id": "111b55ec-e5bf-4e5e-b413-73aa93cf9c52", "role": "staff"}
+2026-01-02T02:41:25.234+0700	INFO	handler/auth_hand.go:48	User logged in	{"email": "staff@inv.com"}
+2026-01-02T02:41:25.235+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/auth/login", "duration": "270.691306ms", "ip": "[::1]:52120", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-02T02:41:37.956+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "GET", "path": "/api/users/", "duration": "9.645562ms", "ip": "[::1]:52120", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-02T02:41:54.088+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/users/", "duration": "2.022799ms", "ip": "[::1]:52120", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-02T02:42:03.810+0700	WARN	repository/user_repo.go:100	User not found	{"id": "af10495c-7e5e-425d-885a-f3136f591f3e", "error": "no rows in result set"}
+2026-01-02T02:42:03.810+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "DELETE", "path": "/api/users/af10495c-7e5e-425d-885a-f3136f591f3e", "duration": "4.234965ms", "ip": "[::1]:52120", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-02T02:44:23.856+0700	INFO	assignment-5/main.go:84	Shutting down server...
+2026-01-02T02:44:23.859+0700	INFO	assignment-5/main.go:93	Server stopped
