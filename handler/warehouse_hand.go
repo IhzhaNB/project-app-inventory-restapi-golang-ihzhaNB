@@ -41,7 +41,7 @@ func (wh *WarehouseHandler) Create(w http.ResponseWriter, r *http.Request) {
 		wh.log.Error("Failed to create warehouse", zap.Error(err))
 
 		statusCode := http.StatusBadRequest
-		if strings.Contains(err.Error(), "code already exists") {
+		if strings.Contains(err.Error(), "already exists") {
 			statusCode = http.StatusConflict
 		}
 

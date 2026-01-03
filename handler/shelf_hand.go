@@ -41,7 +41,7 @@ func (sh *ShelfHandler) Create(w http.ResponseWriter, r *http.Request) {
 		sh.log.Error("Failed to create shelf", zap.Error(err))
 
 		statusCode := http.StatusBadRequest
-		if strings.Contains(err.Error(), "code already exists") {
+		if strings.Contains(err.Error(), "already exists") {
 			statusCode = http.StatusConflict
 		}
 
