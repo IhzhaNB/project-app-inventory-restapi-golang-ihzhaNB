@@ -1,0 +1,61 @@
+2026-01-04T01:15:38.062+0700	INFO	assignment-5/main.go:46	Database connected	{"host": "172.29.48.1", "database": "inventory_system"}
+2026-01-04T01:15:38.064+0700	INFO	assignment-5/main.go:67	Server starting	{"port": "8080", "app": "Inventary_System", "debug": true}
+2026-01-04T01:18:32.416+0700	INFO	repository/warehouse_repo.go:172	Fetched all warehouse	{"total_warehouses": 8}
+2026-01-04T01:18:32.426+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "GET", "path": "/api/warehouses/", "duration": "73.636665ms", "ip": "[::1]:46300", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-04T01:19:32.093+0700	WARN	repository/shelf_repo.go:119	Shelf not found	{"code": "RAK-A1", "warehouse_id": "10ef012f-00a1-43db-955e-ef5185bce6f4", "error": "no rows in result set"}
+2026-01-04T01:19:32.114+0700	INFO	repository/shelf_repo.go:63	Shelf Created	{"id": "9ad7d651-80ea-4cd2-b3c8-58d7bf252883", "name": "Rak Elektronik"}
+2026-01-04T01:19:32.114+0700	INFO	service/shelf_serv.go:77	Shelf created	{"shelf_id": "9ad7d651-80ea-4cd2-b3c8-58d7bf252883", "warehouse_id": "10ef012f-00a1-43db-955e-ef5185bce6f4"}
+2026-01-04T01:19:32.115+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/admin/shelves/", "duration": "84.92766ms", "ip": "[::1]:46300", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-04T01:20:18.615+0700	WARN	repository/shelf_repo.go:119	Shelf not found	{"code": "RAK-B1", "warehouse_id": "10ef012f-00a1-43db-955e-ef5185bce6f4", "error": "no rows in result set"}
+2026-01-04T01:20:18.620+0700	INFO	repository/shelf_repo.go:63	Shelf Created	{"id": "0227939e-3510-4663-bb8c-26ab402be9d2", "name": "Rak Pakaian"}
+2026-01-04T01:20:18.620+0700	INFO	service/shelf_serv.go:77	Shelf created	{"shelf_id": "0227939e-3510-4663-bb8c-26ab402be9d2", "warehouse_id": "10ef012f-00a1-43db-955e-ef5185bce6f4"}
+2026-01-04T01:20:18.620+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/admin/shelves/", "duration": "14.486181ms", "ip": "[::1]:46300", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-04T01:20:57.987+0700	INFO	repository/category_repo.go:162	Fetched all categories	{"total_categories": 6}
+2026-01-04T01:20:58.039+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "GET", "path": "/api/categories/", "duration": "106.260943ms", "ip": "[::1]:46300", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-04T01:23:43.607+0700	WARN	repository/shelf_repo.go:119	Shelf not found	{"code": "RAK-EL-01", "warehouse_id": "10ef012f-00a1-43db-955e-ef5185bce6f4", "error": "no rows in result set"}
+2026-01-04T01:23:43.612+0700	INFO	repository/shelf_repo.go:63	Shelf Created	{"id": "69d6e27f-2cdf-4b4a-9456-d45f8b06c68c", "name": "Rak Elektronik 1"}
+2026-01-04T01:23:43.612+0700	INFO	service/shelf_serv.go:77	Shelf created	{"shelf_id": "69d6e27f-2cdf-4b4a-9456-d45f8b06c68c", "warehouse_id": "10ef012f-00a1-43db-955e-ef5185bce6f4"}
+2026-01-04T01:23:43.613+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/admin/shelves/", "duration": "46.415144ms", "ip": "[::1]:35594", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-04T01:23:59.353+0700	WARN	repository/shelf_repo.go:119	Shelf not found	{"code": "RAK-EL-02", "warehouse_id": "10ef012f-00a1-43db-955e-ef5185bce6f4", "error": "no rows in result set"}
+2026-01-04T01:23:59.355+0700	INFO	repository/shelf_repo.go:63	Shelf Created	{"id": "e2e0b142-a603-4412-b388-a3a1dc2306b6", "name": "Rak Elektronik 2"}
+2026-01-04T01:23:59.358+0700	INFO	service/shelf_serv.go:77	Shelf created	{"shelf_id": "e2e0b142-a603-4412-b388-a3a1dc2306b6", "warehouse_id": "10ef012f-00a1-43db-955e-ef5185bce6f4"}
+2026-01-04T01:23:59.358+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/admin/shelves/", "duration": "11.358484ms", "ip": "[::1]:35594", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-04T01:24:30.998+0700	WARN	repository/shelf_repo.go:119	Shelf not found	{"code": "RAK-PK-01", "warehouse_id": "10ef012f-00a1-43db-955e-ef5185bce6f4", "error": "no rows in result set"}
+2026-01-04T01:24:31.002+0700	INFO	repository/shelf_repo.go:63	Shelf Created	{"id": "6c92f600-ea82-45d7-a126-1ebc91638ae5", "name": "Rak Pakaian 1"}
+2026-01-04T01:24:31.003+0700	INFO	service/shelf_serv.go:77	Shelf created	{"shelf_id": "6c92f600-ea82-45d7-a126-1ebc91638ae5", "warehouse_id": "10ef012f-00a1-43db-955e-ef5185bce6f4"}
+2026-01-04T01:24:31.005+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/admin/shelves/", "duration": "32.489019ms", "ip": "[::1]:35594", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-04T01:24:40.438+0700	WARN	repository/shelf_repo.go:119	Shelf not found	{"code": "RAK-PK-02", "warehouse_id": "10ef012f-00a1-43db-955e-ef5185bce6f4", "error": "no rows in result set"}
+2026-01-04T01:24:40.441+0700	INFO	repository/shelf_repo.go:63	Shelf Created	{"id": "bb599fc5-2c9b-46c7-a6f9-72ce5a4cef52", "name": "Rak Pakaian 2"}
+2026-01-04T01:24:40.441+0700	INFO	service/shelf_serv.go:77	Shelf created	{"shelf_id": "bb599fc5-2c9b-46c7-a6f9-72ce5a4cef52", "warehouse_id": "10ef012f-00a1-43db-955e-ef5185bce6f4"}
+2026-01-04T01:24:40.441+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/admin/shelves/", "duration": "12.3671ms", "ip": "[::1]:35594", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-04T01:24:51.857+0700	WARN	repository/shelf_repo.go:119	Shelf not found	{"code": "RAK-MK-01", "warehouse_id": "10ef012f-00a1-43db-955e-ef5185bce6f4", "error": "no rows in result set"}
+2026-01-04T01:24:51.859+0700	INFO	repository/shelf_repo.go:63	Shelf Created	{"id": "58064380-5063-4b8c-bacb-bf2f8fe4b069", "name": "Rak Makanan 1"}
+2026-01-04T01:24:51.859+0700	INFO	service/shelf_serv.go:77	Shelf created	{"shelf_id": "58064380-5063-4b8c-bacb-bf2f8fe4b069", "warehouse_id": "10ef012f-00a1-43db-955e-ef5185bce6f4"}
+2026-01-04T01:24:51.860+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/admin/shelves/", "duration": "7.652018ms", "ip": "[::1]:35594", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-04T01:25:48.220+0700	WARN	repository/shelf_repo.go:119	Shelf not found	{"code": "RAK-EL-01", "warehouse_id": "a188c2aa-2c67-4cf9-bec7-fb7e688805cb", "error": "no rows in result set"}
+2026-01-04T01:25:48.222+0700	INFO	repository/shelf_repo.go:63	Shelf Created	{"id": "57ce6000-556e-4955-9979-164868f3d8f7", "name": "Rak Elektronik Bandung"}
+2026-01-04T01:25:48.222+0700	INFO	service/shelf_serv.go:77	Shelf created	{"shelf_id": "57ce6000-556e-4955-9979-164868f3d8f7", "warehouse_id": "a188c2aa-2c67-4cf9-bec7-fb7e688805cb"}
+2026-01-04T01:25:48.222+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/admin/shelves/", "duration": "7.919708ms", "ip": "[::1]:35594", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-04T01:25:58.232+0700	WARN	repository/shelf_repo.go:119	Shelf not found	{"code": "RAK-PK-01", "warehouse_id": "a188c2aa-2c67-4cf9-bec7-fb7e688805cb", "error": "no rows in result set"}
+2026-01-04T01:25:58.234+0700	INFO	repository/shelf_repo.go:63	Shelf Created	{"id": "21aea4cc-c6ed-4a8b-bcf2-e5955f11d049", "name": "Rak Pakaian Bandung"}
+2026-01-04T01:25:58.235+0700	INFO	service/shelf_serv.go:77	Shelf created	{"shelf_id": "21aea4cc-c6ed-4a8b-bcf2-e5955f11d049", "warehouse_id": "a188c2aa-2c67-4cf9-bec7-fb7e688805cb"}
+2026-01-04T01:25:58.235+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/admin/shelves/", "duration": "9.145766ms", "ip": "[::1]:35594", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-04T01:26:25.830+0700	WARN	repository/shelf_repo.go:119	Shelf not found	{"code": "RAK-UTAMA", "warehouse_id": "f882ecc2-f2be-4da7-9769-de1145023b5a", "error": "no rows in result set"}
+2026-01-04T01:26:25.834+0700	INFO	repository/shelf_repo.go:63	Shelf Created	{"id": "790a909c-c390-4b77-93f1-34046de8aba1", "name": "Rak Utama Surabaya"}
+2026-01-04T01:26:25.834+0700	INFO	service/shelf_serv.go:77	Shelf created	{"shelf_id": "790a909c-c390-4b77-93f1-34046de8aba1", "warehouse_id": "f882ecc2-f2be-4da7-9769-de1145023b5a"}
+2026-01-04T01:26:25.836+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/admin/shelves/", "duration": "16.485884ms", "ip": "[::1]:35594", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-04T01:26:54.574+0700	WARN	repository/shelf_repo.go:119	Shelf not found	{"code": "RAK-KHUSUS", "warehouse_id": "78a3b28e-2efc-45be-8acc-cd0e33443610", "error": "no rows in result set"}
+2026-01-04T01:26:54.577+0700	INFO	repository/shelf_repo.go:63	Shelf Created	{"id": "2b07ff72-a76e-4e52-8d29-e00896aa9ffc", "name": "Rak Khusus"}
+2026-01-04T01:26:54.578+0700	INFO	service/shelf_serv.go:77	Shelf created	{"shelf_id": "2b07ff72-a76e-4e52-8d29-e00896aa9ffc", "warehouse_id": "78a3b28e-2efc-45be-8acc-cd0e33443610"}
+2026-01-04T01:26:54.579+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "POST", "path": "/api/admin/shelves/", "duration": "14.207027ms", "ip": "[::1]:35594", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-04T01:27:11.331+0700	INFO	repository/shelf_repo.go:172	Fetched all shelves	{"total_shelves": 11}
+2026-01-04T01:27:11.334+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "GET", "path": "/api/shelves/", "duration": "17.98685ms", "ip": "[::1]:35594", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-04T01:28:13.409+0700	INFO	repository/shelf_repo.go:273	Shelf deleted	{"id": "9ad7d651-80ea-4cd2-b3c8-58d7bf252883"}
+2026-01-04T01:28:13.409+0700	INFO	service/shelf_serv.go:223	Shelf deleted	{"shelf_id": "9ad7d651-80ea-4cd2-b3c8-58d7bf252883"}
+2026-01-04T01:28:13.410+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "DELETE", "path": "/api/admin/shelves/9ad7d651-80ea-4cd2-b3c8-58d7bf252883", "duration": "31.626894ms", "ip": "[::1]:58184", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-04T01:30:07.551+0700	WARN	repository/shelf_repo.go:119	Shelf not found	{"code": "RAK-KH-01", "warehouse_id": "10ef012f-00a1-43db-955e-ef5185bce6f4", "error": "no rows in result set"}
+2026-01-04T01:30:07.554+0700	INFO	repository/shelf_repo.go:249	shelf updated	{"id": "0227939e-3510-4663-bb8c-26ab402be9d2"}
+2026-01-04T01:30:07.555+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "PUT", "path": "/api/admin/shelves/0227939e-3510-4663-bb8c-26ab402be9d2", "duration": "18.981957ms", "ip": "[::1]:39838", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-04T01:30:37.346+0700	INFO	middleware/logger.go:23	HTTP Request	{"method": "GET", "path": "/api/shelves/warehouse/10ef012f-00a1-43db-955e-ef5185bce6f4", "duration": "14.207405ms", "ip": "[::1]:39838", "user_agent": "PostmanRuntime/7.51.0"}
+2026-01-04T01:45:29.437+0700	INFO	assignment-5/main.go:84	Shutting down server...
+2026-01-04T01:45:29.467+0700	INFO	assignment-5/main.go:93	Server stopped

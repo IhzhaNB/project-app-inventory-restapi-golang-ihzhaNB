@@ -11,6 +11,7 @@ type Service struct {
 	User      UserService
 	Warehouse WarehouseService
 	Category  CategoryService
+	Shelf     ShelfService
 }
 
 func NewService(repo *repository.Repository, log *zap.Logger) *Service {
@@ -19,5 +20,6 @@ func NewService(repo *repository.Repository, log *zap.Logger) *Service {
 		User:      NewUserService(repo, log),
 		Warehouse: NewWarehouseService(repo, log),
 		Category:  NewCategoryService(repo, log),
+		Shelf:     NewShelfService(repo, log),
 	}
 }

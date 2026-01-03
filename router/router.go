@@ -55,6 +55,13 @@ func SetupRouter(svc *service.Service, hdl handler.Handler) *chi.Mux {
 			r.Get("/{id}", hdl.Category.FindByID)
 		})
 
+		// ========== SHELF ROUTES ==========
+		r.Route("/api/shelves", func(r chi.Router) {
+			r.Get("/", hdl.Shelf.FindAll)
+			r.Get("/{id}", hdl.Shelf.FindByID)
+			r.Get("/warehouse/{warehouse_id}", hdl.Shelf.FindByWarehouseID)
+		})
+
 		// ========== PRODUCT ROUTES (nanti) ==========
 		// r.Route("/api/products", func(r chi.Router) {
 		//     r.Get("/", hdl.Product.FindAll)       // semua bisa lihat
@@ -94,6 +101,13 @@ func SetupRouter(svc *service.Service, hdl handler.Handler) *chi.Mux {
 			r.Post("/", hdl.Category.Create)
 			r.Put("/{id}", hdl.Category.Update)
 			r.Delete("/{id}", hdl.Category.Delete)
+		})
+
+		// ========== SHELF ROUTES ==========
+		r.Route("/api/admin/shelves", func(r chi.Router) {
+			r.Post("/", hdl.Shelf.Create)
+			r.Put("/{id}", hdl.Shelf.Update)
+			r.Delete("/{id}", hdl.Shelf.Delete)
 		})
 
 		// ========== REPORT ROUTES (nanti) ==========
