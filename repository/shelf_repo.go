@@ -213,10 +213,8 @@ func (sr *shelfRepo) Update(ctx context.Context, shelf *model.Shelf) error {
 func (sr *shelfRepo) Delete(ctx context.Context, id uuid.UUID) error {
 	query := `UPDATE shelves SET deleted_at = $1 WHERE id = $2 AND deleted_at IS NULL`
 
-	now := time.Now()
-
 	// Execute delete
-	result, err := sr.db.Exec(ctx, query, now, id)
+	result, err := sr.db.Exec(ctx, query, time.Now(), id)
 	if err != nil {
 		sr.log.Error("Failed to delete shelf",
 			zap.Error(err),

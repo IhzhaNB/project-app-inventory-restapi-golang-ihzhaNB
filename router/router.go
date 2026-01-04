@@ -38,7 +38,7 @@ func SetupRouter(svc *service.Service, hdl handler.Handler) *chi.Mux {
 
 		// ========== USER ROUTES ==========
 		r.Route("/api/users", func(r chi.Router) {
-			// Middleware: AllowSelfOrAdmin (bisa lihat diri sendiri atau admin)
+			// Middleware: AllowSelfOrAdmin (bisa manage diri sendiri atau admin)
 			r.With(middleware.AllowSelfOrAdmin).Get("/{id}", hdl.User.FindByID)
 			r.With(middleware.AllowSelfOrAdmin).Put("/{id}", hdl.User.Update)
 		})
@@ -59,14 +59,21 @@ func SetupRouter(svc *service.Service, hdl handler.Handler) *chi.Mux {
 		r.Route("/api/shelves", func(r chi.Router) {
 			r.Get("/", hdl.Shelf.FindAll)
 			r.Get("/{id}", hdl.Shelf.FindByID)
+
 			r.Get("/warehouse/{warehouse_id}", hdl.Shelf.FindByWarehouseID)
 		})
 
-		// ========== PRODUCT ROUTES (nanti) ==========
-		// r.Route("/api/products", func(r chi.Router) {
-		//     r.Get("/", hdl.Product.FindAll)       // semua bisa lihat
-		//     r.Get("/{id}", hdl.Product.FindByID)  // semua bisa lihat detail
-		// })
+		// ========== PRODUCT ROUTES ==========
+		r.Route("/api/products", func(r chi.Router) {
+			r.Get("/", hdl.Product.FindAll)
+			r.Get("/{id}", hdl.Product.FindByID)
+			r.Get("/low-stock", hdl.Product.FindLowStock)
+
+			r.Get("/category/{category_id}", hdl.Product.FindByCategoryID)
+			r.Get("/shelf/{shelf_id}", hdl.Product.FindByShelfID)
+
+			r.Put("/{id}/stock", hdl.Product.UpdateStock)
+		})
 
 		// ========== SALE ROUTES (nanti) ==========
 		// r.Route("/api/sales", func(r chi.Router) {
@@ -108,6 +115,13 @@ func SetupRouter(svc *service.Service, hdl handler.Handler) *chi.Mux {
 			r.Post("/", hdl.Shelf.Create)
 			r.Put("/{id}", hdl.Shelf.Update)
 			r.Delete("/{id}", hdl.Shelf.Delete)
+		})
+
+		// ========== PRODUCT ROUTES ==========
+		r.Route("/api/admin/products", func(r chi.Router) {
+			r.Post("/", hdl.Product.Create)
+			r.Put("/{id}", hdl.Product.Update)
+			r.Delete("/{id}", hdl.Product.Delete)
 		})
 
 		// ========== REPORT ROUTES (nanti) ==========
