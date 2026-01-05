@@ -39,8 +39,10 @@ func SetupRouter(svc *service.Service, hdl handler.Handler) *chi.Mux {
 		// ========== USER ROUTES ==========
 		r.Route("/api/users", func(r chi.Router) {
 			// Middleware: AllowSelfOrAdmin (bisa manage diri sendiri atau admin)
-			r.With(middleware.AllowSelfOrAdmin).Get("/{id}", hdl.User.FindByID)
-			r.With(middleware.AllowSelfOrAdmin).Put("/{id}", hdl.User.Update)
+			r.With(middleware.AllowSelfOrAdmin).Group(func(r chi.Router) {
+				r.Get("/{id}", hdl.User.FindByID)
+				r.Put("/{id}", hdl.User.Update)
+			})
 		})
 
 		// ========== WAREHOUSE ROUTES ==========
@@ -75,12 +77,19 @@ func SetupRouter(svc *service.Service, hdl handler.Handler) *chi.Mux {
 			r.Put("/{id}/stock", hdl.Product.UpdateStock)
 		})
 
-		// ========== SALE ROUTES (nanti) ==========
-		// r.Route("/api/sales", func(r chi.Router) {
-		//     r.Get("/", hdl.Sale.FindAll)         // staff hanya lihat punya sendiri
-		//     r.Post("/", hdl.Sale.Create)         // semua bisa create sale
-		//     r.Get("/{id}", hdl.Sale.FindByID)    // sesuai permission
-		// })
+		// ========== SALE ROUTES ==========
+		r.Route("/api/sales", func(r chi.Router) {
+			// Staff can create sales and list their own sales
+			r.Get("/", hdl.Sale.FindAll) // GET /api/sales?page=1&limit=10
+			r.Post("/", hdl.Sale.Create) // POST /api/sales
+
+			// Sales endpoints with ownership checking
+			// Staff can only access their own sales, admins can access all
+			r.With(middleware.AllowSelfOrAdmin).Group(func(r chi.Router) {
+				r.Get("/{id}", hdl.Sale.FindByID)            // GET /api/sales/{id}
+				r.Put("/{id}/status", hdl.Sale.UpdateStatus) // PUT /api/sales/{id}/status
+			})
+		})
 	})
 
 	// ==================== ADMIN ROUTES ====================
@@ -122,6 +131,15 @@ func SetupRouter(svc *service.Service, hdl handler.Handler) *chi.Mux {
 			r.Post("/", hdl.Product.Create)
 			r.Put("/{id}", hdl.Product.Update)
 			r.Delete("/{id}", hdl.Product.Delete)
+		})
+
+		// ========== SALE ADMIN ROUTES ==========
+		r.Route("/api/admin/sales", func(r chi.Router) {
+			// Admin can see all sales without ownership filter
+			r.Get("/", hdl.Sale.FindAll) // GET /api/admin/sales
+
+			// Admin-only report endpoint
+			r.Get("/report", hdl.Sale.GetSalesReport) // GET /api/admin/sales/report?start_date=...&end_date=...
 		})
 
 		// ========== REPORT ROUTES (nanti) ==========

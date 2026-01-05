@@ -13,6 +13,7 @@ type Service struct {
 	Category  CategoryService
 	Shelf     ShelfService
 	Product   ProductService
+	Sale      SaleService
 }
 
 func NewService(repo *repository.Repository, log *zap.Logger) *Service {
@@ -23,5 +24,6 @@ func NewService(repo *repository.Repository, log *zap.Logger) *Service {
 		Category:  NewCategoryService(repo, log),
 		Shelf:     NewShelfService(repo, log),
 		Product:   NewProductService(repo, log),
+		Sale:      NewSaleService(repo, log),
 	}
 }

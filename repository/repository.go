@@ -13,6 +13,7 @@ type Repository struct {
 	Category  CategoryRepo
 	Shelf     ShelfRepo
 	Product   ProductRepo
+	Sale      SaleRepo
 }
 
 func NewRepository(db database.PgxIface, log *zap.Logger) *Repository {
@@ -23,5 +24,6 @@ func NewRepository(db database.PgxIface, log *zap.Logger) *Repository {
 		Category:  NewCategoryRepo(db, log),
 		Shelf:     NewShelfRepo(db, log),
 		Product:   NewProductRepo(db, log),
+		Sale:      NewSaleRepo(db, log),
 	}
 }
