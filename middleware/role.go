@@ -12,8 +12,8 @@ import (
 func RequireRole(allowedRoles ...model.UserRole) func(http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			// Ambil user dari context (setelah Auth middleware)
-			user := GetUserFromContext(r.Context())
+			// Ambil user dari context MENGGUNAKAN utils.GetUserFromContext
+			user := utils.GetUserFromContext(r.Context())
 			if user == nil {
 				utils.ResponseError(w, http.StatusUnauthorized,
 					"Authentication required", nil)

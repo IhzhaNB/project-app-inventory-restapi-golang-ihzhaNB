@@ -12,7 +12,7 @@ import (
 	"go.uber.org/zap"
 )
 
-// Context key type (hindari string key langsung)
+// Context key type (gunakan yang sama dengan utils)
 type contextKey string
 
 const userContextKey contextKey = "user"
@@ -55,8 +55,8 @@ func Auth(authService service.AuthService) func(http.Handler) http.Handler {
 				return
 			}
 
-			// Simpan user di request context
-			ctx := context.WithValue(r.Context(), userContextKey, user)
+			// Simpan user di request context MENGGUNAKAN utils.SetUserToContext
+			ctx := utils.SetUserToContext(r.Context(), user)
 
 			// Lanjut ke handler dengan context baru
 			next.ServeHTTP(w, r.WithContext(ctx))
@@ -65,9 +65,7 @@ func Auth(authService service.AuthService) func(http.Handler) http.Handler {
 }
 
 // GetUserFromContext helper untuk ambil user dari context
+// SEKARANG GUNAKAN utils.GetUserFromContext, tapi kita keep untuk backward compatibility
 func GetUserFromContext(ctx context.Context) *model.User {
-	if user, ok := ctx.Value(userContextKey).(*model.User); ok {
-		return user
-	}
-	return nil
+	return utils.GetUserFromContext(ctx)
 }

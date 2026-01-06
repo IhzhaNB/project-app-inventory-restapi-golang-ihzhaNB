@@ -14,7 +14,8 @@ import (
 // 2. Role adalah admin/super_admin
 func AllowSelfOrAdmin(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		currentUser := GetUserFromContext(r.Context())
+		// Ambil user dari context MENGGUNAKAN utils.GetUserFromContext
+		currentUser := utils.GetUserFromContext(r.Context())
 		if currentUser == nil {
 			utils.ResponseError(w, http.StatusUnauthorized, "Authentication required", nil)
 			return
