@@ -35,17 +35,17 @@ func NewUserService(repo *repository.Repository, log *zap.Logger) UserService {
 // CREATE USER
 // Business logic: validate, hash password, save to db
 func (us *userService) Create(ctx context.Context, req user.CreateUserRequest) (*user.UserResponse, error) {
-	// 1. Validate input
+	// 1. Validate input format (pure validation)
 	if err := utils.ValidateStruct(req); err != nil {
 		return nil, fmt.Errorf("validation failed: %w", err)
 	}
 
-	// 2. Check email uniqueness
+	// 2. Check email uniqueness (business rule)
 	if existing, _ := us.repo.User.FindByEmail(ctx, req.Email); existing != nil {
 		return nil, fmt.Errorf("email already exists")
 	}
 
-	// 3. Hash password
+	// 3. Hash password (business logic)
 	passwordHash := utils.HashPassword(req.Password)
 
 	// 4. Prepare user object
@@ -54,7 +54,7 @@ func (us *userService) Create(ctx context.Context, req user.CreateUserRequest) (
 		Email:        req.Email,
 		PasswordHash: passwordHash,
 		FullName:     req.FullName,
-		Role:         model.UserRole(req.Role),
+		Role:         model.UserRole(req.Role), // Role sudah divalidasi di handler
 		IsActive:     true,
 	}
 
@@ -64,7 +64,7 @@ func (us *userService) Create(ctx context.Context, req user.CreateUserRequest) (
 		return nil, fmt.Errorf("failed to create user")
 	}
 
-	// 6. Prepare response (exclude sensitive data)
+	// 6. Return response DTO
 	response := us.convertToResponse(newUser)
 
 	us.log.Info("User created", zap.String("user_id", newUser.ID.String()))
@@ -118,6 +118,7 @@ func (us *userService) FindAll(ctx context.Context, page int, limit int) ([]user
 // UPDATE USER
 // Business logic: validate, update fields
 func (us *userService) Update(ctx context.Context, id uuid.UUID, req user.UpdateUserRequest) (*user.UserResponse, error) {
+	// Get existing user
 	userToUpdate, err := us.repo.User.FindByID(ctx, id)
 	if err != nil {
 		return nil, fmt.Errorf("user not found")
@@ -141,6 +142,7 @@ func (us *userService) Update(ctx context.Context, id uuid.UUID, req user.Update
 		updated = true
 	}
 
+	// Role sudah divalidasi di handler, kita trust saja
 	if req.Role != nil && model.UserRole(*req.Role) != userToUpdate.Role {
 		userToUpdate.Role = model.UserRole(*req.Role)
 		updated = true

@@ -3,6 +3,8 @@ package handler
 import (
 	"encoding/json"
 	"inventory-system/dto/user"
+	"inventory-system/middleware"
+	"inventory-system/model"
 	"inventory-system/service"
 	"inventory-system/utils"
 	"net/http"
@@ -39,7 +41,39 @@ func (uh *UserHandler) Create(w http.ResponseWriter, r *http.Request) {
 	}
 	defer r.Body.Close()
 
-	// Call service
+	// ========== PERMISSION VALIDATION IN HANDLER ==========
+	currentUser := middleware.GetUserFromContext(r.Context())
+	if currentUser == nil {
+		utils.ResponseError(w, http.StatusUnauthorized, "Authentication required", nil)
+		return
+	}
+
+	// Rule 1: Admin cannot create Super Admin
+	if currentUser.Role == model.RoleAdmin && req.Role == string(model.RoleSuperAdmin) {
+		uh.log.Warn("Admin attempted to create super_admin",
+			zap.String("admin_id", currentUser.ID.String()),
+			zap.String("email", req.Email),
+		)
+
+		utils.ResponseError(w, http.StatusForbidden,
+			"Admin cannot create super_admin user", nil)
+		return
+	}
+
+	// Rule 2: Validate requested role is valid
+	validRoles := map[string]bool{
+		string(model.RoleSuperAdmin): true,
+		string(model.RoleAdmin):      true,
+		string(model.RoleStaff):      true,
+	}
+	if !validRoles[req.Role] {
+		utils.ResponseError(w, http.StatusBadRequest,
+			"Invalid role. Must be: super_admin, admin, or staff", nil)
+		return
+	}
+	// ========== END PERMISSION VALIDATION ==========
+
+	// Call service (pure business logic)
 	createdUser, err := uh.service.User.Create(r.Context(), req)
 	if err != nil {
 		uh.log.Error("Failed to create user", zap.Error(err))
@@ -142,7 +176,62 @@ func (uh *UserHandler) Update(w http.ResponseWriter, r *http.Request) {
 	}
 	defer r.Body.Close()
 
-	// Call service
+	// ========== PERMISSION VALIDATION IN HANDLER ==========
+	currentUser := middleware.GetUserFromContext(r.Context())
+	if currentUser == nil {
+		utils.ResponseError(w, http.StatusUnauthorized, "Authentication required", nil)
+		return
+	}
+
+	// Get target user untuk validasi (fetch sekali saja)
+	targetUser, err := uh.service.User.FindByID(r.Context(), userID)
+	if err != nil {
+		utils.ResponseError(w, http.StatusNotFound, "User not found", err.Error())
+		return
+	}
+
+	// Rule 1: Admin cannot change ANY user to Super Admin
+	if req.Role != nil && *req.Role == string(model.RoleSuperAdmin) {
+		if currentUser.Role == model.RoleAdmin {
+			uh.log.Warn("Admin attempted to update user to super_admin",
+				zap.String("admin_id", currentUser.ID.String()),
+				zap.String("target_user", targetUser.ID),
+			)
+
+			utils.ResponseError(w, http.StatusForbidden,
+				"Admin cannot change user role to super_admin", nil)
+			return
+		}
+	}
+
+	// Rule 2: Admin cannot modify Super Admin user at all
+	if targetUser.Role == string(model.RoleSuperAdmin) && currentUser.Role == model.RoleAdmin {
+		uh.log.Warn("Admin attempted to modify super_admin",
+			zap.String("admin_id", currentUser.ID.String()),
+			zap.String("super_admin_id", targetUser.ID),
+		)
+
+		utils.ResponseError(w, http.StatusForbidden,
+			"Admin cannot modify super_admin user", nil)
+		return
+	}
+
+	// Rule 3: Validate role if provided
+	if req.Role != nil {
+		validRoles := map[string]bool{
+			string(model.RoleSuperAdmin): true,
+			string(model.RoleAdmin):      true,
+			string(model.RoleStaff):      true,
+		}
+		if !validRoles[*req.Role] {
+			utils.ResponseError(w, http.StatusBadRequest,
+				"Invalid role. Must be: super_admin, admin, or staff", nil)
+			return
+		}
+	}
+	// ========== END PERMISSION VALIDATION ==========
+
+	// Call service (pure business logic)
 	updatedUser, err := uh.service.User.Update(r.Context(), userID, req)
 	if err != nil {
 		uh.log.Error("Failed to update user", zap.Error(err))

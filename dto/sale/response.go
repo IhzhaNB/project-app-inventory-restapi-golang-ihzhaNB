@@ -35,13 +35,3 @@ type SaleListResponse struct {
 	Limit      int            `json:"limit"`
 	TotalPages int            `json:"total_pages"`
 }
-
-// SalesReportResponse contains report data
-type SalesReportResponse struct {
-	TotalSales     int       `json:"total_sales"`
-	TotalRevenue   float64   `json:"total_revenue"`
-	TotalItemsSold int       `json:"total_items_sold"`
-	AverageSale    float64   `json:"average_sale"`
-	StartDate      time.Time `json:"start_date"`
-	EndDate        time.Time `json:"end_date"`
-}

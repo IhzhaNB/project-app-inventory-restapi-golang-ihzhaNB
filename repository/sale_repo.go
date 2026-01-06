@@ -25,9 +25,6 @@ type SaleRepo interface {
 	CreateSaleItems(ctx context.Context, items []model.SaleItem) error
 	FindSaleItems(ctx context.Context, saleID uuid.UUID) ([]model.SaleItem, error)
 	FindSaleItemsWithProduct(ctx context.Context, saleID uuid.UUID) ([]model.SaleItemWithProduct, error)
-
-	// Report operations
-	GetSalesReport(ctx context.Context, startDate, endDate time.Time) (*model.SalesReport, error)
 }
 
 type saleRepo struct {
@@ -293,36 +290,4 @@ func (sr *saleRepo) UpdateSaleStatus(ctx context.Context, id uuid.UUID, status m
 
 	sr.log.Info("Sale status updated", zap.String("status", string(status)))
 	return nil
-}
-
-// GetSalesReport generates sales report for date range
-func (sr *saleRepo) GetSalesReport(ctx context.Context, startDate, endDate time.Time) (*model.SalesReport, error) {
-	query := `
-		SELECT 
-			COUNT(*) as total_sales,
-			COALESCE(SUM(total_amount), 0) as total_revenue,
-			COALESCE(SUM(
-				(SELECT SUM(quantity) FROM sale_items WHERE sale_id = sales.id)
-			), 0) as total_items_sold,
-			CASE WHEN COUNT(*) > 0 THEN COALESCE(SUM(total_amount), 0) / COUNT(*) ELSE 0 END as average_sale
-		FROM sales 
-		WHERE deleted_at IS NULL 
-			AND status = 'completed'
-			AND created_at BETWEEN $1 AND $2
-	`
-
-	var report model.SalesReport
-	err := sr.db.QueryRow(ctx, query, startDate, endDate).Scan(
-		&report.TotalSales, &report.TotalRevenue, &report.TotalItemsSold, &report.AverageSale,
-	)
-	if err != nil {
-		sr.log.Error("Failed to get sales report", zap.Error(err))
-		return nil, fmt.Errorf("get sales report failed: %w", err)
-	}
-
-	// Add date range to report
-	report.StartDate = startDate
-	report.EndDate = endDate
-
-	return &report, nil
 }

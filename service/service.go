@@ -14,6 +14,7 @@ type Service struct {
 	Shelf     ShelfService
 	Product   ProductService
 	Sale      SaleService
+	Report    ReportService
 }
 
 func NewService(repo *repository.Repository, log *zap.Logger) *Service {
@@ -25,5 +26,6 @@ func NewService(repo *repository.Repository, log *zap.Logger) *Service {
 		Shelf:     NewShelfService(repo, log),
 		Product:   NewProductService(repo, log),
 		Sale:      NewSaleService(repo, log),
+		Report:    NewReportService(repo, log),
 	}
 }

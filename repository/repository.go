@@ -14,6 +14,7 @@ type Repository struct {
 	Shelf     ShelfRepo
 	Product   ProductRepo
 	Sale      SaleRepo
+	Report    ReportRepo
 }
 
 func NewRepository(db database.PgxIface, log *zap.Logger) *Repository {
@@ -25,5 +26,6 @@ func NewRepository(db database.PgxIface, log *zap.Logger) *Repository {
 		Shelf:     NewShelfRepo(db, log),
 		Product:   NewProductRepo(db, log),
 		Sale:      NewSaleRepo(db, log),
+		Report:    NewReportRepo(db, log),
 	}
 }

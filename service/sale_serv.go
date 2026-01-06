@@ -15,14 +15,10 @@ import (
 
 // SaleService defines business logic for sales
 type SaleService interface {
-	// Sale operations
 	CreateSale(ctx context.Context, req sale.CreateSaleRequest, userID uuid.UUID) (*sale.SaleResponse, error)
 	GetSaleByID(ctx context.Context, id uuid.UUID) (*sale.SaleResponse, error)
 	GetAllSales(ctx context.Context, userID *uuid.UUID, page, limit int) ([]sale.SaleResponse, utils.Pagination, error)
 	UpdateSaleStatus(ctx context.Context, id uuid.UUID, req sale.UpdateSaleStatusRequest) (*sale.SaleResponse, error)
-
-	// Report operations
-	GetSalesReport(ctx context.Context, req sale.SalesReportRequest) (*sale.SalesReportResponse, error)
 }
 
 type saleService struct {
@@ -227,53 +223,6 @@ func (ss *saleService) UpdateSaleStatus(ctx context.Context, id uuid.UUID, req s
 
 	// Get updated sale with items
 	return ss.getSaleWithItems(ctx, id)
-}
-
-// GetSalesReport generates sales report for given date range
-func (ss *saleService) GetSalesReport(ctx context.Context, req sale.SalesReportRequest) (*sale.SalesReportResponse, error) {
-	// Validate request
-	if err := utils.ValidateStruct(req); err != nil {
-		return nil, fmt.Errorf("validation failed: %w", err)
-	}
-
-	// Parse date strings to time.Time
-	startDate, err := time.Parse("2006-01-02", req.StartDate)
-	if err != nil {
-		return nil, fmt.Errorf("invalid start date format. Use YYYY-MM-DD")
-	}
-
-	endDate, err := time.Parse("2006-01-02", req.EndDate)
-	if err != nil {
-		return nil, fmt.Errorf("invalid end date format. Use YYYY-MM-DD")
-	}
-
-	// Validate date range
-	if startDate.After(endDate) {
-		return nil, fmt.Errorf("start date cannot be after end date")
-	}
-
-	// Get report from repository
-	report, err := ss.repo.Sale.GetSalesReport(ctx, startDate, endDate)
-	if err != nil {
-		return nil, fmt.Errorf("failed to generate sales report: %w", err)
-	}
-
-	// Convert to response DTO
-	response := &sale.SalesReportResponse{
-		TotalSales:     report.TotalSales,
-		TotalRevenue:   report.TotalRevenue,
-		TotalItemsSold: report.TotalItemsSold,
-		AverageSale:    report.AverageSale,
-		StartDate:      report.StartDate,
-		EndDate:        report.EndDate,
-	}
-
-	ss.log.Info("Sales report generated",
-		zap.Time("start", startDate),
-		zap.Time("end", endDate),
-		zap.Int("sales", report.TotalSales))
-
-	return response, nil
 }
 
 // getSaleWithItems helper: retrieves sale with all items and product details
