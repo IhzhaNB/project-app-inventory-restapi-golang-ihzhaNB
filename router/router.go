@@ -148,6 +148,18 @@ func SetupRouter(svc *service.Service, hdl handler.Handler) *chi.Mux {
 				r.Put("/{id}/status", hdl.Sale.UpdateStatus)
 			})
 		})
+
+		// ==================== REPORT ROUTES ====================
+		// Product & Sales reports accessible to all authenticated users
+		r.Route("/api/reports", func(r chi.Router) {
+			// GET /api/reports/products - Product inventory report
+			// Semua user bisa akses (staff, admin, super_admin)
+			r.Get("/products", hdl.Report.GetProductReport)
+
+			// GET /api/reports/sales - Sales report dengan date range
+			// Query params: ?start_date=2024-01-01&end_date=2024-12-31
+			r.Get("/sales", hdl.Report.GetSalesReport)
+		})
 	})
 
 	// ==================== ADMIN ROUTES (Admin & Super Admin only) ====================
@@ -234,29 +246,16 @@ func SetupRouter(svc *service.Service, hdl handler.Handler) *chi.Mux {
 			// Admin can see sales from all users, not just their own
 			// Query params: ?page=1&limit=10
 			r.Get("/", hdl.Sale.FindAll)
-
-			// GET /api/admin/sales/report - Generate sales report
-			// FEATURE REQUIREMENT: Sales and revenue reporting
-			// Query params: ?start_date=2024-01-01&end_date=2024-12-31
-			// Returns: total sales, revenue, items sold, average sale
-			r.Get("/report", hdl.Sale.GetSalesReport)
 		})
 
-		// ========== REPORT ROUTES (For Future Implementation) ==========
-		// Uncomment when report service is implemented
-		/*
-			r.Route("/api/admin/reports", func(r chi.Router) {
-				// GET /api/admin/reports/products - Product inventory report
-				r.Get("/products", hdl.Report.Products)
-
-				// GET /api/admin/reports/sales - Sales analytics report
-				r.Get("/sales", hdl.Report.Sales)
-
-				// GET /api/admin/reports/revenue - Revenue report (admin only)
-				// Staff cannot access revenue reports (requirement)
-				r.Get("/revenue", hdl.Report.Revenue)
-			})
-		*/
+		// ==================== ADMIN REPORT ROUTES ====================
+		// Revenue report hanya untuk admin & super_admin
+		r.Route("/api/admin/reports", func(r chi.Router) {
+			// GET /api/admin/reports/revenue - Revenue analytics report
+			// Query params: ?start_date=2024-01-01&end_date=2024-12-31&group_by=month
+			// Staff tidak boleh akses report revenue (sesuai requirement)
+			r.Get("/revenue", hdl.Report.GetRevenueReport)
+		})
 	})
 
 	// ==================== ERROR HANDLERS ====================
