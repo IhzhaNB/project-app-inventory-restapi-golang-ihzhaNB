@@ -14,7 +14,8 @@ import (
 type WarehouseRepo interface {
 	Create(ctx context.Context, warehouse *model.Warehouse) error
 	FindByID(ctx context.Context, id uuid.UUID) (*model.Warehouse, error)
-	FindAll(ctx context.Context) ([]model.Warehouse, error)
+	FindAll(ctx context.Context, limit int, offset int) ([]model.Warehouse, error)
+	CountAll(ctx context.Context) (int, error)
 	Update(ctx context.Context, warehouse *model.Warehouse) error
 	Delete(ctx context.Context, id uuid.UUID) error
 }
@@ -90,49 +91,62 @@ func (wr *warehouseRepo) FindByID(ctx context.Context, id uuid.UUID) (*model.War
 	return &warehouse, nil
 }
 
-func (wr *warehouseRepo) FindAll(ctx context.Context) ([]model.Warehouse, error) {
+// FindAll dengan pagination
+func (wr *warehouseRepo) FindAll(ctx context.Context, limit int, offset int) ([]model.Warehouse, error) {
 	query := `
-		SELECT id, name, address, created_at, updated_at, deleted_at
-		FROM warehouses WHERE deleted_at IS NULL
-		ORDER BY created_at DESC
-	`
+        SELECT id, name, address, created_at, updated_at, deleted_at
+        FROM warehouses 
+        WHERE deleted_at IS NULL
+        ORDER BY created_at DESC
+        LIMIT $1 OFFSET $2
+    `
 
-	// Query semua warehouse
-	rows, err := wr.db.Query(ctx, query)
+	rows, err := wr.db.Query(ctx, query, limit, offset)
 	if err != nil {
-		wr.log.Error("Failed to query warehouse", zap.Error(err))
-		return nil, fmt.Errorf("query warehouse failed: %w", err)
+		wr.log.Error("Failed to query warehouses", zap.Error(err))
+		return nil, fmt.Errorf("query warehouses failed: %w", err)
 	}
 	defer rows.Close()
 
-	// Iterate hasil query
 	var warehouses []model.Warehouse
 	for rows.Next() {
 		var warehouse model.Warehouse
 		err := rows.Scan(
-			&warehouse.ID,
-			&warehouse.Name,
-			&warehouse.Address,
-			&warehouse.CreatedAt,
-			&warehouse.UpdatedAt,
-			&warehouse.DeletedAt,
+			&warehouse.ID, &warehouse.Name, &warehouse.Address,
+			&warehouse.CreatedAt, &warehouse.UpdatedAt, &warehouse.DeletedAt,
 		)
 		if err != nil {
 			wr.log.Error("Failed to scan warehouse", zap.Error(err))
 			return nil, fmt.Errorf("scan warehouse failed: %w", err)
 		}
-
 		warehouses = append(warehouses, warehouse)
 	}
 
-	// Cek error dari rows
 	if err = rows.Err(); err != nil {
 		wr.log.Error("Rows iteration error", zap.Error(err))
 		return nil, fmt.Errorf("rows iteration failed: %w", err)
 	}
 
-	wr.log.Info("Fetched all warehouse", zap.Int("total_warehouses", len(warehouses)))
+	wr.log.Info("Fetched warehouses with pagination",
+		zap.Int("limit", limit),
+		zap.Int("offset", offset),
+		zap.Int("count", len(warehouses)))
+
 	return warehouses, nil
+}
+
+// CountAll menghitung total warehouses aktif
+func (wr *warehouseRepo) CountAll(ctx context.Context) (int, error) {
+	query := `SELECT COUNT(*) FROM warehouses WHERE deleted_at IS NULL`
+
+	var count int
+	err := wr.db.QueryRow(ctx, query).Scan(&count)
+	if err != nil {
+		wr.log.Error("Failed to count warehouses", zap.Error(err))
+		return 0, fmt.Errorf("count warehouses failed: %w", err)
+	}
+
+	return count, nil
 }
 
 func (wr *warehouseRepo) Update(ctx context.Context, warehouse *model.Warehouse) error {

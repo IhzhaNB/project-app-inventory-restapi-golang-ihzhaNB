@@ -15,7 +15,8 @@ type CategoryRepo interface {
 	Create(ctx context.Context, category *model.Category) error
 	FindByID(ctx context.Context, id uuid.UUID) (*model.Category, error)
 	FindByName(ctx context.Context, code string) (*model.Category, error)
-	FindAll(ctx context.Context) ([]model.Category, error)
+	FindAll(ctx context.Context, limit int, offset int) ([]model.Category, error)
+	CountAll(ctx context.Context) (int, error)
 	Update(ctx context.Context, category *model.Category) error
 	Delete(ctx context.Context, id uuid.UUID) error
 }
@@ -115,48 +116,62 @@ func (cr *categoryRepo) FindByName(ctx context.Context, name string) (*model.Cat
 	return &category, nil
 }
 
-func (cr *categoryRepo) FindAll(ctx context.Context) ([]model.Category, error) {
+// FindAll dengan pagination
+func (cr *categoryRepo) FindAll(ctx context.Context, limit int, offset int) ([]model.Category, error) {
 	query := `
-		SELECT id, name, description, created_at, updated_at, deleted_at
-		FROM categories WHERE deleted_at IS NULL
-		ORDER BY created_at DESC
-	`
+        SELECT id, name, description, created_at, updated_at, deleted_at
+        FROM categories 
+        WHERE deleted_at IS NULL
+        ORDER BY created_at DESC
+        LIMIT $1 OFFSET $2
+    `
 
-	// Query semua category
-	rows, err := cr.db.Query(ctx, query)
+	rows, err := cr.db.Query(ctx, query, limit, offset)
 	if err != nil {
-		cr.log.Error("Failed to query category", zap.Error(err))
-		return nil, fmt.Errorf("query category failed: %w", err)
+		cr.log.Error("Failed to query categories", zap.Error(err))
+		return nil, fmt.Errorf("query categories failed: %w", err)
 	}
 	defer rows.Close()
 
-	// Iterate hasil query
 	var categories []model.Category
 	for rows.Next() {
 		var category model.Category
-		if err := rows.Scan(
-			&category.ID,
-			&category.Name,
-			&category.Description,
-			&category.CreatedAt,
-			&category.UpdatedAt,
-			&category.DeletedAt,
-		); err != nil {
+		err := rows.Scan(
+			&category.ID, &category.Name, &category.Description,
+			&category.CreatedAt, &category.UpdatedAt, &category.DeletedAt,
+		)
+		if err != nil {
 			cr.log.Error("Failed to scan category", zap.Error(err))
 			return nil, fmt.Errorf("scan category failed: %w", err)
 		}
-
 		categories = append(categories, category)
 	}
 
-	// Cek error dari rows
 	if err = rows.Err(); err != nil {
 		cr.log.Error("Rows iteration error", zap.Error(err))
 		return nil, fmt.Errorf("rows iteration failed: %w", err)
 	}
 
-	cr.log.Info("Fetched all categories", zap.Int("total_categories", len(categories)))
+	cr.log.Info("Fetched categories with pagination",
+		zap.Int("limit", limit),
+		zap.Int("offset", offset),
+		zap.Int("count", len(categories)))
+
 	return categories, nil
+}
+
+// CountAll menghitung total categories aktif
+func (cr *categoryRepo) CountAll(ctx context.Context) (int, error) {
+	query := `SELECT COUNT(*) FROM categories WHERE deleted_at IS NULL`
+
+	var count int
+	err := cr.db.QueryRow(ctx, query).Scan(&count)
+	if err != nil {
+		cr.log.Error("Failed to count categories", zap.Error(err))
+		return 0, fmt.Errorf("count categories failed: %w", err)
+	}
+
+	return count, nil
 }
 
 func (cr *categoryRepo) Update(ctx context.Context, category *model.Category) error {

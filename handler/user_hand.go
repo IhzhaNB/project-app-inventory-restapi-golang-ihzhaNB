@@ -6,6 +6,7 @@ import (
 	"inventory-system/service"
 	"inventory-system/utils"
 	"net/http"
+	"strconv"
 	"strings"
 
 	"github.com/go-chi/chi/v5"
@@ -79,14 +80,49 @@ func (uh *UserHandler) FindByID(w http.ResponseWriter, r *http.Request) {
 // FIND ALL USERS HANDLER
 // GET /api/admin/users (Admin & Super Admin only)
 func (uh *UserHandler) FindAll(w http.ResponseWriter, r *http.Request) {
-	// Call Service
-	users, err := uh.service.User.FindAll(r.Context())
+	// Get pagination parameters from query string
+	pageStr := r.URL.Query().Get("page")
+	limitStr := r.URL.Query().Get("limit")
+
+	// Default values
+	page := 1
+	limit := 10
+
+	// Parse page parameter
+	if pageStr != "" {
+		if p, err := strconv.Atoi(pageStr); err == nil && p > 0 {
+			page = p
+		} else {
+			utils.ResponseError(w, http.StatusBadRequest, "Invalid page parameter", nil)
+			return
+		}
+	}
+
+	// Parse limit parameter
+	if limitStr != "" {
+		if l, err := strconv.Atoi(limitStr); err == nil && l > 0 && l <= 100 {
+			limit = l
+		} else {
+			utils.ResponseError(w, http.StatusBadRequest, "Invalid limit parameter (max 100)", nil)
+			return
+		}
+	}
+
+	// Call service
+	users, pagination, err := uh.service.User.FindAll(r.Context(), page, limit)
 	if err != nil {
-		utils.ResponseError(w, http.StatusInternalServerError, "Failed to get users", err.Error())
+		uh.log.Error("Failed to get users", zap.Error(err))
+		utils.ResponseError(w, http.StatusInternalServerError, "Failed to retrieve users", nil)
 		return
 	}
 
-	utils.ResponseSuccess(w, http.StatusOK, "Users retrieved", users)
+	// Response with pagination
+	response := map[string]interface{}{
+		"users":      users,
+		"pagination": pagination,
+	}
+
+	utils.ResponseSuccess(w, http.StatusOK, "Users retrieved successfully", response)
 }
 
 // UPDATE USER HANDLER

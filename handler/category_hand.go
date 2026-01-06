@@ -6,6 +6,7 @@ import (
 	"inventory-system/service"
 	"inventory-system/utils"
 	"net/http"
+	"strconv"
 	"strings"
 
 	"github.com/go-chi/chi/v5"
@@ -71,14 +72,51 @@ func (ch *CategoryHandler) FindByID(w http.ResponseWriter, r *http.Request) {
 	utils.ResponseSuccess(w, http.StatusOK, "Category retrivied", categoryData)
 }
 
+// FindAll - GET /api/categories (untuk semua user)
 func (ch *CategoryHandler) FindAll(w http.ResponseWriter, r *http.Request) {
-	categories, err := ch.service.Category.FindAll(r.Context())
+	// Get pagination parameters
+	pageStr := r.URL.Query().Get("page")
+	limitStr := r.URL.Query().Get("limit")
+
+	// Default values
+	page := 1
+	limit := 10
+
+	// Parse page
+	if pageStr != "" {
+		if p, err := strconv.Atoi(pageStr); err == nil && p > 0 {
+			page = p
+		} else {
+			utils.ResponseError(w, http.StatusBadRequest, "Invalid page parameter", nil)
+			return
+		}
+	}
+
+	// Parse limit
+	if limitStr != "" {
+		if l, err := strconv.Atoi(limitStr); err == nil && l > 0 && l <= 100 {
+			limit = l
+		} else {
+			utils.ResponseError(w, http.StatusBadRequest, "Invalid limit parameter (max 100)", nil)
+			return
+		}
+	}
+
+	// Call service
+	categories, pagination, err := ch.service.Category.FindAll(r.Context(), page, limit)
 	if err != nil {
-		utils.ResponseError(w, http.StatusInternalServerError, "Failed to get categoies", err.Error())
+		ch.log.Error("Failed to get categories", zap.Error(err))
+		utils.ResponseError(w, http.StatusInternalServerError, "Failed to retrieve categories", nil)
 		return
 	}
 
-	utils.ResponseSuccess(w, http.StatusOK, "Category retrivied", categories)
+	// Response with pagination
+	response := map[string]interface{}{
+		"categories": categories,
+		"pagination": pagination,
+	}
+
+	utils.ResponseSuccess(w, http.StatusOK, "Categories retrieved successfully", response)
 }
 
 func (ch *CategoryHandler) Update(w http.ResponseWriter, r *http.Request) {

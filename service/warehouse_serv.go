@@ -15,7 +15,7 @@ import (
 type WarehouseService interface {
 	Create(ctx context.Context, req warehouse.CreateWarehouseRequest) (*warehouse.WarehouseResponse, error)
 	FindByID(ctx context.Context, id uuid.UUID) (*warehouse.WarehouseResponse, error)
-	FindAll(ctx context.Context) ([]warehouse.WarehouseResponse, error)
+	FindAll(ctx context.Context, page int, limit int) ([]warehouse.WarehouseResponse, utils.Pagination, error)
 	Update(ctx context.Context, id uuid.UUID, req warehouse.UpdateWarehouseRequest) (*warehouse.WarehouseResponse, error)
 	Delete(ctx context.Context, id uuid.UUID) error
 }
@@ -75,24 +75,37 @@ func (ws *warehouseService) FindByID(ctx context.Context, id uuid.UUID) (*wareho
 	}, nil
 }
 
-func (ws *warehouseService) FindAll(ctx context.Context) ([]warehouse.WarehouseResponse, error) {
-	warehouses, err := ws.repo.Warehouse.FindAll(ctx)
+func (ws *warehouseService) FindAll(ctx context.Context, page int, limit int) ([]warehouse.WarehouseResponse, utils.Pagination, error) {
+	// Setup pagination
+	pagination := utils.NewPagination(page, limit)
+
+	// Get data with pagination
+	warehouses, err := ws.repo.Warehouse.FindAll(ctx, pagination.Limit, pagination.Offset())
 	if err != nil {
-		return nil, fmt.Errorf("failed to get warehouses")
+		return nil, pagination, fmt.Errorf("failed to get warehouses")
 	}
 
-	var responses []warehouse.WarehouseResponse
-	for _, w := range warehouses { // w = warehouse (single)
-		responses = append(responses, warehouse.WarehouseResponse{
-			ID:        w.ID.String(),
-			Name:      w.Name,
-			Address:   w.Address,
-			CreatedAt: w.CreatedAt,
-			UpdatedAt: w.UpdatedAt,
-		})
+	// Get total count
+	total, err := ws.repo.Warehouse.CountAll(ctx)
+	if err != nil {
+		return nil, pagination, fmt.Errorf("failed to count warehouses")
 	}
 
-	return responses, nil
+	// Set total in pagination
+	pagination.SetTotal(total)
+
+	// Convert to response
+	responses := make([]warehouse.WarehouseResponse, 0, len(warehouses))
+	for _, w := range warehouses {
+		responses = append(responses, *ws.convertToResponse(&w))
+	}
+
+	ws.log.Info("Warehouses fetched with pagination",
+		zap.Int("page", page),
+		zap.Int("limit", limit),
+		zap.Int("total", total))
+
+	return responses, pagination, nil
 }
 
 func (ws *warehouseService) Update(ctx context.Context, id uuid.UUID, req warehouse.UpdateWarehouseRequest) (*warehouse.WarehouseResponse, error) {
@@ -141,4 +154,14 @@ func (ws *warehouseService) Delete(ctx context.Context, id uuid.UUID) error {
 
 	ws.log.Info("Warehouse deleted", zap.String("warehouse_id", id.String()))
 	return nil
+}
+
+func (ws *warehouseService) convertToResponse(w *model.Warehouse) *warehouse.WarehouseResponse {
+	return &warehouse.WarehouseResponse{
+		ID:        w.ID.String(),
+		Name:      w.Name,
+		Address:   w.Address,
+		CreatedAt: w.CreatedAt,
+		UpdatedAt: w.UpdatedAt,
+	}
 }

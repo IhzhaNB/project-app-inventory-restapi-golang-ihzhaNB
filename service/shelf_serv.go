@@ -15,7 +15,7 @@ import (
 type ShelfService interface {
 	Create(ctx context.Context, req shelf.CreateShelfRequest) (*shelf.ShelfResponse, error)
 	FindByID(ctx context.Context, id uuid.UUID) (*shelf.ShelfResponse, error)
-	FindAll(ctx context.Context) ([]shelf.ShelfResponse, error)
+	FindAll(ctx context.Context, page int, limit int) ([]shelf.ShelfResponse, utils.Pagination, error)
 	FindByWarehouseID(ctx context.Context, warehouseID uuid.UUID) ([]shelf.ShelfResponse, error)
 	Update(ctx context.Context, id uuid.UUID, req shelf.UpdateShelfRequest) (*shelf.ShelfResponse, error)
 	Delete(ctx context.Context, id uuid.UUID) error
@@ -88,24 +88,37 @@ func (ss *shelfService) FindByID(ctx context.Context, id uuid.UUID) (*shelf.Shel
 	}, nil
 }
 
-func (ss *shelfService) FindAll(ctx context.Context) ([]shelf.ShelfResponse, error) {
-	shelves, err := ss.repo.Shelf.FindAll(ctx)
+func (ss *shelfService) FindAll(ctx context.Context, page int, limit int) ([]shelf.ShelfResponse, utils.Pagination, error) {
+	// Setup pagination
+	pagination := utils.NewPagination(page, limit)
+
+	// Get data with pagination
+	shelves, err := ss.repo.Shelf.FindAll(ctx, pagination.Limit, pagination.Offset())
 	if err != nil {
-		return nil, fmt.Errorf("failed to get shelf")
+		return nil, pagination, fmt.Errorf("failed to get shelves")
 	}
 
-	var responses []shelf.ShelfResponse
-	for _, s := range shelves { // s = shelf (single)
-		responses = append(responses, shelf.ShelfResponse{
-			ID:          s.ID.String(),
-			WarehouseID: s.WarehouseID.String(),
-			Name:        s.Name,
-			CreatedAt:   s.CreatedAt,
-			UpdatedAt:   s.UpdatedAt,
-		})
+	// Get total count
+	total, err := ss.repo.Shelf.CountAll(ctx)
+	if err != nil {
+		return nil, pagination, fmt.Errorf("failed to count shelves")
 	}
 
-	return responses, nil
+	// Set total in pagination
+	pagination.SetTotal(total)
+
+	// Convert to response
+	responses := make([]shelf.ShelfResponse, 0, len(shelves))
+	for _, s := range shelves {
+		responses = append(responses, *ss.convertToResponse(&s))
+	}
+
+	ss.log.Info("Shelves fetched with pagination",
+		zap.Int("page", page),
+		zap.Int("limit", limit),
+		zap.Int("total", total))
+
+	return responses, pagination, nil
 }
 
 func (ss *shelfService) FindByWarehouseID(ctx context.Context, warehouseID uuid.UUID) ([]shelf.ShelfResponse, error) {
@@ -193,4 +206,14 @@ func (ss *shelfService) Delete(ctx context.Context, id uuid.UUID) error {
 
 	ss.log.Info("Shelf deleted", zap.String("shelf_id", id.String()))
 	return nil
+}
+
+func (ss *shelfService) convertToResponse(s *model.Shelf) *shelf.ShelfResponse {
+	return &shelf.ShelfResponse{
+		ID:          s.ID.String(),
+		WarehouseID: s.WarehouseID.String(),
+		Name:        s.Name,
+		CreatedAt:   s.CreatedAt,
+		UpdatedAt:   s.UpdatedAt,
+	}
 }

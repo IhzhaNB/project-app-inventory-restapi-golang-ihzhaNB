@@ -15,7 +15,7 @@ import (
 type UserService interface {
 	Create(ctx context.Context, req user.CreateUserRequest) (*user.UserResponse, error)
 	FindByID(ctx context.Context, id uuid.UUID) (*user.UserResponse, error)
-	FindAll(ctx context.Context) ([]user.UserResponse, error)
+	FindAll(ctx context.Context, page int, limit int) ([]user.UserResponse, utils.Pagination, error)
 	Update(ctx context.Context, id uuid.UUID, req user.UpdateUserRequest) (*user.UserResponse, error)
 	Delete(ctx context.Context, id uuid.UUID) error
 }
@@ -65,16 +65,7 @@ func (us *userService) Create(ctx context.Context, req user.CreateUserRequest) (
 	}
 
 	// 6. Prepare response (exclude sensitive data)
-	response := &user.UserResponse{
-		ID:        newUser.ID.String(),
-		Username:  newUser.Username,
-		Email:     newUser.Email,
-		FullName:  newUser.FullName,
-		Role:      string(newUser.Role),
-		IsActive:  newUser.IsActive,
-		CreatedAt: newUser.CreatedAt,
-		UpdatedAt: newUser.UpdatedAt,
-	}
+	response := us.convertToResponse(newUser)
 
 	us.log.Info("User created", zap.String("user_id", newUser.ID.String()))
 	return response, nil
@@ -87,40 +78,41 @@ func (us *userService) FindByID(ctx context.Context, id uuid.UUID) (*user.UserRe
 		return nil, fmt.Errorf("user not found")
 	}
 
-	return &user.UserResponse{
-		ID:        foundUser.ID.String(),
-		Username:  foundUser.Username,
-		Email:     foundUser.Email,
-		FullName:  foundUser.FullName,
-		Role:      string(foundUser.Role),
-		IsActive:  foundUser.IsActive,
-		CreatedAt: foundUser.CreatedAt,
-		UpdatedAt: foundUser.UpdatedAt,
-	}, nil
+	return us.convertToResponse(foundUser), nil
 }
 
 // FIND ALL USERS
-func (us *userService) FindAll(ctx context.Context) ([]user.UserResponse, error) {
-	users, err := us.repo.User.FindAll(ctx)
+func (us *userService) FindAll(ctx context.Context, page int, limit int) ([]user.UserResponse, utils.Pagination, error) {
+	// Setup pagination
+	pagination := utils.NewPagination(page, limit)
+
+	// Get data with pagination
+	users, err := us.repo.User.FindAll(ctx, pagination.Limit, pagination.Offset())
 	if err != nil {
-		return nil, fmt.Errorf("failed to get users")
+		return nil, pagination, fmt.Errorf("failed to get users")
 	}
 
-	var responses []user.UserResponse
-	for _, u := range users { // u = user (single)
-		responses = append(responses, user.UserResponse{
-			ID:        u.ID.String(),
-			Username:  u.Username,
-			Email:     u.Email,
-			FullName:  u.FullName,
-			Role:      string(u.Role),
-			IsActive:  u.IsActive,
-			CreatedAt: u.CreatedAt,
-			UpdatedAt: u.UpdatedAt,
-		})
+	// Get total count
+	total, err := us.repo.User.CountAll(ctx)
+	if err != nil {
+		return nil, pagination, fmt.Errorf("failed to count users")
 	}
 
-	return responses, nil
+	// Set total in pagination
+	pagination.SetTotal(total)
+
+	// Convert to response
+	responses := make([]user.UserResponse, 0, len(users))
+	for _, u := range users {
+		responses = append(responses, *us.convertToResponse(&u))
+	}
+
+	us.log.Info("Users fetched with pagination",
+		zap.Int("page", page),
+		zap.Int("limit", limit),
+		zap.Int("total", total))
+
+	return responses, pagination, nil
 }
 
 // UPDATE USER
@@ -166,16 +158,7 @@ func (us *userService) Update(ctx context.Context, id uuid.UUID, req user.Update
 		}
 	}
 
-	return &user.UserResponse{
-		ID:        userToUpdate.ID.String(),
-		Username:  userToUpdate.Username,
-		Email:     userToUpdate.Email,
-		FullName:  userToUpdate.FullName,
-		Role:      string(userToUpdate.Role),
-		IsActive:  userToUpdate.IsActive,
-		CreatedAt: userToUpdate.CreatedAt,
-		UpdatedAt: userToUpdate.UpdatedAt,
-	}, nil
+	return us.convertToResponse(userToUpdate), nil
 }
 
 // DELETE USER
@@ -191,4 +174,18 @@ func (us *userService) Delete(ctx context.Context, id uuid.UUID) error {
 
 	us.log.Info("User deleted", zap.String("user_id", id.String()))
 	return nil
+}
+
+// HELPER Method Response
+func (us *userService) convertToResponse(u *model.User) *user.UserResponse {
+	return &user.UserResponse{
+		ID:        u.ID.String(),
+		Username:  u.Username,
+		Email:     u.Email,
+		FullName:  u.FullName,
+		Role:      string(u.Role),
+		IsActive:  u.IsActive,
+		CreatedAt: u.CreatedAt,
+		UpdatedAt: u.UpdatedAt,
+	}
 }

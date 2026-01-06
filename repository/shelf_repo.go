@@ -14,7 +14,8 @@ import (
 type ShelfRepo interface {
 	Create(ctx context.Context, shelf *model.Shelf) error
 	FindByID(ctx context.Context, id uuid.UUID) (*model.Shelf, error)
-	FindAll(ctx context.Context) ([]model.Shelf, error)
+	FindAll(ctx context.Context, limit int, offset int) ([]model.Shelf, error)
+	CountAll(ctx context.Context) (int, error)
 	FindByWarehouseID(ctx context.Context, warehouseID uuid.UUID) ([]model.Shelf, error)
 	Update(ctx context.Context, shelf *model.Shelf) error
 	Delete(ctx context.Context, id uuid.UUID) error
@@ -90,49 +91,62 @@ func (sr *shelfRepo) FindByID(ctx context.Context, id uuid.UUID) (*model.Shelf, 
 	return &shelf, nil
 }
 
-func (sr *shelfRepo) FindAll(ctx context.Context) ([]model.Shelf, error) {
+// FindAll dengan pagination
+func (sr *shelfRepo) FindAll(ctx context.Context, limit int, offset int) ([]model.Shelf, error) {
 	query := `
-		SELECT id, warehouse_id, name, created_at, updated_at, deleted_at
-		FROM shelves WHERE deleted_at IS NULL
-		ORDER BY created_at DESC
-	`
+        SELECT id, warehouse_id, name, created_at, updated_at, deleted_at
+        FROM shelves 
+        WHERE deleted_at IS NULL
+        ORDER BY created_at DESC
+        LIMIT $1 OFFSET $2
+    `
 
-	// Query semua warehouse
-	rows, err := sr.db.Query(ctx, query)
+	rows, err := sr.db.Query(ctx, query, limit, offset)
 	if err != nil {
-		sr.log.Error("Failed to query shelf", zap.Error(err))
-		return nil, fmt.Errorf("query shelf failed: %w", err)
+		sr.log.Error("Failed to query shelves", zap.Error(err))
+		return nil, fmt.Errorf("query shelves failed: %w", err)
 	}
 	defer rows.Close()
 
-	// Iterate hasil query
 	var shelves []model.Shelf
 	for rows.Next() {
 		var shelf model.Shelf
 		err := rows.Scan(
-			&shelf.ID,
-			&shelf.WarehouseID,
-			&shelf.Name,
-			&shelf.CreatedAt,
-			&shelf.UpdatedAt,
-			&shelf.DeletedAt,
+			&shelf.ID, &shelf.WarehouseID, &shelf.Name,
+			&shelf.CreatedAt, &shelf.UpdatedAt, &shelf.DeletedAt,
 		)
 		if err != nil {
-			sr.log.Error("Failed to scan shelves", zap.Error(err))
-			return nil, fmt.Errorf("scan shelves failed: %w", err)
+			sr.log.Error("Failed to scan shelf", zap.Error(err))
+			return nil, fmt.Errorf("scan shelf failed: %w", err)
 		}
-
 		shelves = append(shelves, shelf)
 	}
 
-	// Cek error dari rows
 	if err = rows.Err(); err != nil {
 		sr.log.Error("Rows iteration error", zap.Error(err))
 		return nil, fmt.Errorf("rows iteration failed: %w", err)
 	}
 
-	sr.log.Info("Fetched all shelves", zap.Int("total_shelves", len(shelves)))
+	sr.log.Info("Fetched shelves with pagination",
+		zap.Int("limit", limit),
+		zap.Int("offset", offset),
+		zap.Int("count", len(shelves)))
+
 	return shelves, nil
+}
+
+// CountAll menghitung total shelves aktif
+func (sr *shelfRepo) CountAll(ctx context.Context) (int, error) {
+	query := `SELECT COUNT(*) FROM shelves WHERE deleted_at IS NULL`
+
+	var count int
+	err := sr.db.QueryRow(ctx, query).Scan(&count)
+	if err != nil {
+		sr.log.Error("Failed to count shelves", zap.Error(err))
+		return 0, fmt.Errorf("count shelves failed: %w", err)
+	}
+
+	return count, nil
 }
 
 func (sr *shelfRepo) FindByWarehouseID(ctx context.Context, warehouseID uuid.UUID) ([]model.Shelf, error) {

@@ -6,6 +6,7 @@ import (
 	"inventory-system/service"
 	"inventory-system/utils"
 	"net/http"
+	"strconv"
 	"strings"
 
 	"github.com/go-chi/chi/v5"
@@ -71,13 +72,49 @@ func (sh *ShelfHandler) FindByID(w http.ResponseWriter, r *http.Request) {
 }
 
 func (sh *ShelfHandler) FindAll(w http.ResponseWriter, r *http.Request) {
-	shelves, err := sh.service.Shelf.FindAll(r.Context())
+	// Get pagination parameters
+	pageStr := r.URL.Query().Get("page")
+	limitStr := r.URL.Query().Get("limit")
+
+	// Default values
+	page := 1
+	limit := 10
+
+	// Parse page
+	if pageStr != "" {
+		if p, err := strconv.Atoi(pageStr); err == nil && p > 0 {
+			page = p
+		} else {
+			utils.ResponseError(w, http.StatusBadRequest, "Invalid page parameter", nil)
+			return
+		}
+	}
+
+	// Parse limit
+	if limitStr != "" {
+		if l, err := strconv.Atoi(limitStr); err == nil && l > 0 && l <= 100 {
+			limit = l
+		} else {
+			utils.ResponseError(w, http.StatusBadRequest, "Invalid limit parameter (max 100)", nil)
+			return
+		}
+	}
+
+	// Call service
+	shelves, pagination, err := sh.service.Shelf.FindAll(r.Context(), page, limit)
 	if err != nil {
-		utils.ResponseError(w, http.StatusInternalServerError, "Failed to get shelves", err.Error())
+		sh.log.Error("Failed to get shelves", zap.Error(err))
+		utils.ResponseError(w, http.StatusInternalServerError, "Failed to retrieve shelves", nil)
 		return
 	}
 
-	utils.ResponseSuccess(w, http.StatusOK, "Shelves retrivied", shelves)
+	// Response with pagination
+	response := map[string]interface{}{
+		"shelves":    shelves,
+		"pagination": pagination,
+	}
+
+	utils.ResponseSuccess(w, http.StatusOK, "Shelves retrieved successfully", response)
 }
 
 func (sh *ShelfHandler) FindByWarehouseID(w http.ResponseWriter, r *http.Request) {

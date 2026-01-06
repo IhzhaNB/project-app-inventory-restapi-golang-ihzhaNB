@@ -15,7 +15,8 @@ type UserRepo interface {
 	Create(ctx context.Context, user *model.User) error
 	FindByID(ctx context.Context, id uuid.UUID) (*model.User, error)
 	FindByEmail(ctx context.Context, email string) (*model.User, error)
-	FindAll(ctx context.Context) ([]model.User, error)
+	FindAll(ctx context.Context, limit int, offset int) ([]model.User, error)
+	CountAll(ctx context.Context) (int, error)
 	Update(ctx context.Context, user *model.User) error
 	Delete(ctx context.Context, id uuid.UUID) error
 }
@@ -133,54 +134,64 @@ func (ur *userRepo) FindByEmail(ctx context.Context, email string) (*model.User,
 	return &user, nil
 }
 
-func (ur *userRepo) FindAll(ctx context.Context) ([]model.User, error) {
+// FindAll dengan pagination
+func (ur *userRepo) FindAll(ctx context.Context, limit int, offset int) ([]model.User, error) {
 	query := `
         SELECT id, username, email, password_hash, full_name, role, is_active,
                created_at, updated_at, deleted_at
-        FROM users WHERE deleted_at IS NULL
+        FROM users 
+        WHERE deleted_at IS NULL
         ORDER BY created_at DESC
+        LIMIT $1 OFFSET $2
     `
 
-	// Query semua user
-	rows, err := ur.db.Query(ctx, query)
+	rows, err := ur.db.Query(ctx, query, limit, offset)
 	if err != nil {
 		ur.log.Error("Failed to query users", zap.Error(err))
 		return nil, fmt.Errorf("query users failed: %w", err)
 	}
 	defer rows.Close()
 
-	// Iterate hasil query
 	var users []model.User
 	for rows.Next() {
 		var user model.User
 		err := rows.Scan(
-			&user.ID,
-			&user.Username,
-			&user.Email,
-			&user.PasswordHash,
-			&user.FullName,
-			&user.Role,
-			&user.IsActive,
-			&user.CreatedAt,
-			&user.UpdatedAt,
-			&user.DeletedAt,
+			&user.ID, &user.Username, &user.Email, &user.PasswordHash,
+			&user.FullName, &user.Role, &user.IsActive,
+			&user.CreatedAt, &user.UpdatedAt, &user.DeletedAt,
 		)
 		if err != nil {
 			ur.log.Error("Failed to scan user", zap.Error(err))
 			return nil, fmt.Errorf("scan user failed: %w", err)
 		}
-
 		users = append(users, user)
 	}
 
-	// Cek error dari rows
 	if err = rows.Err(); err != nil {
 		ur.log.Error("Rows iteration error", zap.Error(err))
 		return nil, fmt.Errorf("rows iteration failed: %w", err)
 	}
 
-	ur.log.Info("Fetched all users", zap.Int("total_users", len(users)))
+	ur.log.Info("Fetched users with pagination",
+		zap.Int("limit", limit),
+		zap.Int("offset", offset),
+		zap.Int("count", len(users)))
+
 	return users, nil
+}
+
+// CountAll menghitung total users aktif
+func (ur *userRepo) CountAll(ctx context.Context) (int, error) {
+	query := `SELECT COUNT(*) FROM users WHERE deleted_at IS NULL`
+
+	var count int
+	err := ur.db.QueryRow(ctx, query).Scan(&count)
+	if err != nil {
+		ur.log.Error("Failed to count users", zap.Error(err))
+		return 0, fmt.Errorf("count users failed: %w", err)
+	}
+
+	return count, nil
 }
 
 func (ur *userRepo) Update(ctx context.Context, user *model.User) error {
