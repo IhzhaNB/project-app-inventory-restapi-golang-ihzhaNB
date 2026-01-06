@@ -72,7 +72,6 @@ func (ch *CategoryHandler) FindByID(w http.ResponseWriter, r *http.Request) {
 	utils.ResponseSuccess(w, http.StatusOK, "Category retrivied", categoryData)
 }
 
-// FindAll - GET /api/categories (untuk semua user)
 func (ch *CategoryHandler) FindAll(w http.ResponseWriter, r *http.Request) {
 	// Get pagination parameters
 	pageStr := r.URL.Query().Get("page")
